@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HS Dev</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script
+      src="https://kit.fontawesome.com/3e99493752.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/custom.js" defer></script>
+  </head>
+  <body>
+    <!-- 상단바, z-index: 3 -->
+    <header>
+      <nav>
+        <h1>HS Dev</h1>
+        <div>
+          <a>About</a>
+          <a>Features</a>
+          <a>Portfolio</a>
+          <a>Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- 시작 컴포넌트 -->
+    <section class="introduction">
+      <!-- 배경 동영상, z-index: 0 -->
+      <video src="./video/coding.mp4" autoplay muted playsinline loop></video>
+      <!-- 오버레이로 어둡게, z-index: 1 -->
+      <div class="overlay"></div>
+      <!-- 가장 위에 올라갈 텍스트, z-index: 2 -->
+      <div class="content">
+        <h1>Welcome</h1>
+        <h3>console.log("Hello World!");</h3>
+        <p>
+          내가 만든 서비스를 고객들이 이용하는 것이 꿈인 프론트엔드 개발자
+          지망생입니다.
+        </p>
+      </div>
+      <i id="mouse-icon" class="fas fa-arrow-alt-circle-down"></i>
+    </section>
+
+    <!-- 자기 소개 컴포넌트 -->
+    <section class="about">
+      <div>
+        <h4><span>About</span></h4>
+        <h1>About Me</h1>
+      </div>
+      <div class="item-container">
+        <div>
+          <img src="./img/mockup.png" />
+        </div>
+        <div>
+          <h4>안녕하세요, 저는 <span>최현성</span> 입니다.</h4>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo culpa
+            magni laboriosam sit excepturi quibusdam adipisci, vero debitis?
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 내가 할 수 있는 것 소개 컴포넌트 -->
+    <section class="features">
+      <div>
+        <h4><span>Features</span></h4>
+        <h1>What I Do</h1>
+      </div>
+
+      <div class="item-container">
+        <div>
+          <img src="./img/mockup.png" />
+          <p>HTML</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo culpa
+            magni laboriosam sit excepturi quibusdam adipisci, vero debitis?
+          </p>
+        </div>
+
+        <div>
+          <img src="./img/mockup.png" />
+          <p>CSS</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo culpa
+            magni laboriosam sit excepturi quibusdam adipisci, vero debitis?
+          </p>
+        </div>
+
+        <div>
+          <img src="./img/mockup.png" />
+          <p>JS</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo culpa
+            magni laboriosam sit excepturi quibusdam adipisci, vero debitis?
+          </p>
+        </div>
+      </div>
+
+      <div class="item-container">
+        <div>
+          <img src="./img/mockup.png" />
+          <p>HTML</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo culpa
+            magni laboriosam sit excepturi quibusdam adipisci, vero debitis?
+          </p>
+        </div>
+
+        <div>
+          <img src="./img/mockup.png" />
+          <p>CSS</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo culpa
+            magni laboriosam sit excepturi quibusdam adipisci, vero debitis?
+          </p>
+        </div>
+
+        <div>
+          <img src="./img/mockup.png" />
+          <p>JS</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo culpa
+            magni laboriosam sit excepturi quibusdam adipisci, vero debitis?
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 고정된 배경 이미지 -->
+    <div class="fixed-bg"><div class="overlay"></div></div>
+
+    <!-- 포트폴리오 소개 컴포넌트 -->
+    <section class="portfolio">
+      <div>
+        <h4><span>Portfolio</span></h4>
+        <h1>Outputs</h1>
+      </div>
+      <div class="portfolio-container">
+        <div class="portfolio-wrapper">
+          <div class="dropdown-wrapper">
+            <div><img src="./img/mockup.png" /></div>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
+              culpa magni laboriosam sit excepturi quibusdam adipisci, vero
+              debitis?
+            </p>
+            <i class="fas fa-arrow-alt-circle-down"></i>
+          </div>
+          <div class="dropdown-detail hide">
+            <div class="dropdown">
+              <p>추가내용~~~</p>
+              <p>추가내용~~~</p>
+              <p>추가내용~~~</p>
+              <p>추가내용~~~</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-wrapper">
+          <div class="dropdown-wrapper">
+            <div><img src="./img/mockup.png" /></div>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
+              culpa magni laboriosam sit excepturi quibusdam adipisci, vero
+              debitis?
+            </p>
+            <i class="fas fa-arrow-alt-circle-down"></i>
+          </div>
+          <div class="dropdown-detail hide">
+            <div>
+              <p>추가내용~~~</p>
+              <p>추가내용~~~</p>
+              <p>추가내용~~~</p>
+              <p>추가내용~~~</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-wrapper">
+          <div class="dropdown-wrapper">
+            <div><img src="./img/mockup.png" /></div>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
+              culpa magni laboriosam sit excepturi quibusdam adipisci, vero
+              debitis?
+            </p>
+            <i class="fas fa-arrow-alt-circle-down"></i>
+          </div>
+          <div class="dropdown-detail hide">
+            <div>
+              <p>추가내용~~~</p>
+              <p>추가내용~~~</p>
+              <p>추가내용~~~</p>
+              <p>추가내용~~~</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>광운대학교 정보융합학부 (Kwangwoon Univ Information Convergence)</p>
+      <p>2024년 1학기 오픈소스소프트웨어 개인 프로젝트</p>
+      <p>2022204045 최현성</p>
+    </footer>
+  </body>
+</html>

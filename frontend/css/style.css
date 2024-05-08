@@ -1,0 +1,293 @@
+/* CSS 초기화 */
+@import "./normalize.css";
+/* 폰트 추가 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+
+/* ------------------------------------------------- */
+/* 애니메이션 키프레임 생성 */
+@keyframes bounce {
+  0% {
+    scale: 80%;
+  }
+  50% {
+    scale: 100%;
+  }
+  100% {
+    scale: 80%;
+  }
+}
+/* ------------------------------------------------- */
+
+/* 헤더 스타일 */
+header {
+  width: 100%;
+  background-color: black;
+  position: fixed;
+  z-index: 3;
+}
+header nav {
+  display: flex;
+  justify-content: space-between;
+}
+header nav div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+header nav h1 {
+  color: white;
+  margin: 15px;
+  margin-left: 20px;
+}
+header nav div a {
+  color: white;
+  margin: 15px;
+}
+
+/* ------------------------------------------------- */
+
+/* body의 section 공용 스타일 */
+body section {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* section 내 div의 가로 폭 지정 */
+body section div {
+  width: 70%;
+}
+/* section.introduction 컴포넌트가 화면 전체를 채우도록 변경 */
+body .introduction {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+/* 홀수번째 section 배경은 살짝 회색 */
+body section:nth-of-type(2n-1) {
+  background-color: #f8f8f8;
+}
+/* 짝수번째 section 배경은 완전 흰색 */
+body section:nth-of-type(2n) {
+  background-color: white;
+}
+/* introduction section 배경은 검정색으로 */
+body section.introduction {
+  position: relative;
+  margin-bottom: 40px;
+  padding-bottom: 0px;
+}
+
+body section.introduction video {
+  height: 100vh;
+  background-color: black;
+  object-fit: cover;
+  object-position: center center;
+  overflow: hidden;
+  z-index: 0;
+}
+body section.introduction .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+.introduction .content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+/* ------------------------------------------------- */
+/* 전체 폰트 지정 */
+h1,
+h2,
+h3,
+h4,
+p,
+a {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+}
+/* introduction section 내 텍스트만 하얀색으로 */
+.introduction .content h1,
+.introduction .content h2,
+.introduction .content h3,
+.introduction .content h4,
+.introduction .content p {
+  color: white;
+  margin-bottom: 10px;
+}
+/* 텍스트 크기 및 여백 지정 */
+body section h1 {
+  font-size: 45px;
+  padding: 5px;
+}
+body section h2 {
+  font-size: 40px;
+  padding: 5px;
+}
+body section h3 {
+  font-size: 35px;
+  padding: 5px;
+}
+body section h4 {
+  font-size: 25px;
+  padding: 5px;
+}
+body section p {
+  font-size: 20px;
+  padding: 5px;
+}
+/* 텍스트 강조용 span 스타일 */
+body section span {
+  color: #ed4848;
+  font-weight: bold;
+}
+/* Font Aweasome 관련 스타일 */
+i {
+  font-size: 50px;
+  display: block;
+  align-content: center;
+  padding: 10px;
+}
+i:hover,
+a:hover,
+nav h1:hover {
+  transform: scale(1.15);
+  transition-duration: 0.3s;
+}
+/* introduction 하단에 배치한 아래방향 화살표 아이콘 */
+i#mouse-icon {
+  color: white;
+  position: absolute;
+  bottom: 40px;
+  animation: bounce 2s ease-in-out infinite;
+  z-index: 1;
+}
+i#mouse-icon:hover {
+  transform: none;
+  transition: none;
+}
+
+/* ------------------------------------------------- */
+/* section.features 관련 스타일 */
+/* section 내 아이템 컨테이너 스타일 */
+body section .item-container {
+  display: flex;
+  justify-content: center;
+}
+/* 아이템 컨테이너 내 요소들은 가로로 배치되고 동일 폭을 가짐 */
+body section .item-container div {
+  flex: 1;
+  margin: 15px;
+  padding: 10px;
+}
+/* features의 item-container 내 div 요소에 마우스를 올리면 그림자 발생 */
+body section.features .item-container div:hover {
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25);
+  transform: scale(1.03);
+  transition-duration: 0.3s;
+}
+
+/* ------------------------------------------------- */
+/* section.portfolio 관련 스타일 */
+/* portfolio-container 내 portfolio-wrapper 요소 스타일 */
+div.portfolio-container {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* portfolio-wrapper 안의 dropdown-wrapper와 dropdown-detail를 감싸는 스타일 */
+div.portfolio-wrapper {
+  display: block;
+  border: 1px solid black;
+  border-radius: 15px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+div.portfolio-wrapper:hover {
+  /* transform: scale(1.03); */
+  background-color: #dfdfdf;
+  transition-duration: 0.3s;
+}
+/* portfolio 썸네일과 제목, 상세보기 버튼이 담긴 wrapper 스타일 */
+div.dropdown-wrapper {
+  display: flex;
+  width: 100%;
+}
+/* portfolio 썸네일 스타일 */
+div.dropdown-wrapper div {
+  flex: 0.3;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 0px;
+  margin: 10px;
+}
+/* portfolio 제목 스타일 */
+div.dropdown-wrapper p {
+  display: block;
+  flex: 1;
+}
+/* portfolio 상세정보 텍스트 스타일 */
+div.dropdown-detail p {
+  margin: auto 15px;
+}
+/* div.dropdown-detail을 보여줬다 껐다 하기 위한 클래스 */
+.hide {
+  display: none;
+}
+/* ------------------------------------------------- */
+
+/* fixed 백그라운드 이미지 */
+body div.fixed-bg {
+  position: relative;
+  background: url("../img/codingImg.jpg") center center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 650px;
+  width: 100%;
+  z-index: 0;
+}
+body div.fixed-bg div.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+/* scrollIntoView함수 결과가 상단바와 충돌해서 필요한 작업, 
+margin을 상단바보다 키우고 padding을 그만큼 음수로 맞춰준다. */
+section > div > h4 {
+  display: block;
+  margin-top: 65px;
+  padding-top: -65px;
+}
+/* ------------------------------------------------- */
+
+/* footer 스타일 */
+footer {
+  background-color: black;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+footer p {
+  color: white;
+  padding: 5px;
+}
