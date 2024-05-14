@@ -49,3 +49,44 @@ for (let anchor of navBarAnchorList) {
     dest.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 }
+
+// 시작 컴포넌트의 텍스트에 타이핑 및 삭제 효과 적용
+document.addEventListener("DOMContentLoaded", () => {
+  const textList = ['console.log("hello world");', "print('hello world')"];
+  const typingElement = document.getElementById("typing-text");
+  // 하나의 텍스트에 대한 인덱스
+  let textIdx = 0;
+  // textList에 대한 인덱스
+  let listIdx = 0;
+  // 삭제 phase인지, 타이핑 phase인지 구분하기 위한 flag
+  let isDeleting = false;
+
+  // 타이핑 관련 무한 재귀 함수
+  const typing = () => {
+    if (!isDeleting) {
+      if (textIdx < textList[listIdx].length) {
+        typingElement.textContent += textList[listIdx].charAt(textIdx);
+        textIdx += 1;
+        setTimeout(typing, 50);
+      } else {
+        isDeleting = true;
+        setTimeout(typing, 700);
+      }
+    } else {
+      if (textIdx > 0) {
+        typingElement.textContent = textList[listIdx].substring(0, textIdx - 1);
+        textIdx -= 1;
+        setTimeout(typing, 50);
+      } else {
+        isDeleting = false;
+        if (listIdx === 0) {
+          listIdx += 1;
+        } else {
+          listIdx -= 1;
+        }
+        setTimeout(typing, 700);
+      }
+    }
+  };
+  typing();
+});

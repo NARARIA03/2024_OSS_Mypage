@@ -16,6 +16,16 @@
     scale: 80%;
   }
 }
+
+@keyframes blink {
+  from,
+  to {
+    color: transparent;
+  }
+  50% {
+    color: #ffffff;
+  }
+}
 /* ------------------------------------------------- */
 
 /* 헤더 스타일 */
@@ -106,7 +116,11 @@ body section.introduction .overlay {
   align-items: center;
   z-index: 1;
 }
-
+.typing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* ------------------------------------------------- */
 /* 전체 폰트 지정 */
 h1,
@@ -177,6 +191,13 @@ i#mouse-icon {
 i#mouse-icon:hover {
   transform: none;
   transition: none;
+}
+/* 커서 깜빡이는 스타일 적용 */
+#cursor {
+  font-weight: bold;
+  margin-left: 3px;
+  animation: blink 0.7s step-end infinite;
+  padding-bottom: 11px;
 }
 
 /* ------------------------------------------------- */
