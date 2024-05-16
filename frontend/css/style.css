@@ -53,6 +53,7 @@ header nav h1 {
 header nav div a {
   color: white;
   margin: 15px;
+  font-weight: 500;
 }
 
 /* ------------------------------------------------- */
@@ -66,7 +67,7 @@ body section {
   justify-content: center;
   align-items: center;
 }
-/* section 내 div의 가로 폭 지정 */
+/* 모든 section 내 div의 가로 폭 지정 */
 body section div {
   width: 70%;
 }
@@ -90,7 +91,7 @@ body section.introduction {
   margin-bottom: 40px;
   padding-bottom: 0px;
 }
-
+/* 백그라운드(z-index: 0) 동영상 배치하고 화면에 꽉 차게 지정 */
 body section.introduction video {
   height: 100vh;
   background-color: black;
@@ -99,6 +100,7 @@ body section.introduction video {
   overflow: hidden;
   z-index: 0;
 }
+/* 백그라운드 동영상 위에 어두운 필터 깔아줌 */
 body section.introduction .overlay {
   position: absolute;
   top: 0;
@@ -108,6 +110,7 @@ body section.introduction .overlay {
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
+/* 백그라운드 동영상 위로 올라갈 텍스트 담긴 div 스타일링 */
 .introduction .content {
   position: absolute;
   display: flex;
@@ -212,6 +215,12 @@ body section .item-container div {
   flex: 1;
   margin: 15px;
   padding: 10px;
+  border-radius: 15px;
+}
+/* 아이템 컨테이너 내 div 내 img에 border 적용 */
+.item-container div img {
+  border-radius: 15px;
+  overflow: hidden;
 }
 /* features의 item-container 내 div 요소에 마우스를 올리면 그림자 발생 */
 body section.features .item-container div:hover {
@@ -297,6 +306,86 @@ section > div > h4 {
   margin-top: 65px;
   padding-top: -65px;
 }
+
+/* ------------------------------------------------- */
+/* contact 컴포넌트 스타일 */
+
+/* info-container와 form-container를 좌우로 배치 */
+.contact-container {
+  display: flex;
+  margin-top: 20px;
+}
+/* info-container는 좌측에 0.35만큼 배치 */
+.info-container {
+  /* border: 1px solid blue; */
+  flex: 0.4;
+  margin-right: 20px;
+  height: 600px;
+}
+/* form-container는 우측에 0.65만큼 배치 */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  flex: 0.6;
+  margin-left: 20px;
+  height: 550px;
+}
+/* info-wrapper는 아이콘과 텍스트를 좌우로 배치 */
+.info-wrapper {
+  border-bottom: 1px solid black;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+/* info-wrapper 내부 아이콘 크기 조절 */
+.info-wrapper i {
+  font-size: 30px;
+}
+.info-wrapper i.fa-school {
+  font-size: 26px;
+}
+/* info-wrapper 내 div 내의 p 사이즈 조절 */
+.info-wrapper div p:nth-of-type(1) {
+  font-weight: bold;
+}
+.info-wrapper div p:nth-of-type(2) {
+  font-size: 16px;
+}
+/* form 내부 요소를 묶는 div 스타일링 */
+.form-wrapper {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+/* form 내부 요소의 label 폰트를 bold로 변경 */
+.form-wrapper label {
+  font-weight: bold;
+}
+/* 이름, 제목을 입력받는 input 태그와 textarea 태그 스타일 */
+.form-wrapper input,
+.form-wrapper textarea {
+  height: 40px;
+  border-radius: 15px;
+  border: 1px solid black;
+  padding: 15px;
+}
+.form-wrapper textarea {
+  height: 250px;
+}
+/* 제출 버튼 관련 스타일링 */
+.form-wrapper input[type="submit"] {
+  font-weight: bold;
+  padding: 0;
+}
+.form-wrapper input[type="submit"]:hover {
+  background-color: yellow;
+  transition: all 0.7s;
+}
 /* ------------------------------------------------- */
 
 /* footer 스타일 */
@@ -312,3 +401,5 @@ footer p {
   color: white;
   padding: 5px;
 }
+
+/* ------------------------------------------------- */

@@ -33,14 +33,14 @@
       <div class="overlay"></div>
       <!-- 가장 위에 올라갈 텍스트, z-index: 2 -->
       <div class="content">
-        <h1>안녕하세요.</h1>
+        <h1>안녕하세요</h1>
         <div class="typing-container">
           <h3 id="typing-text"></h3>
           <h3 id="cursor">|</h3>
         </div>
 
         <p>
-          내가 만든 서비스를 고객들이 이용하는 것이 꿈인 프론트엔드 개발자
+          내가 만든 서비스를 고객들이 이용하는 것이 꿈인 풀스택 개발자
           지망생입니다.
         </p>
       </div>
@@ -202,6 +202,62 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- 내 정보 및 form 컴포넌트 -->
+    <section class="contact">
+      <div>
+        <h4><span>Contact</span></h4>
+        <h1>Contact Me</h1>
+      </div>
+      <div class="contact-container">
+        <div class="info-container">
+          <div class="info-wrapper">
+            <i class="fas fa-phone"></i>
+            <div>
+              <p>Phone</p>
+              <p>010-4069-7407</p>
+            </div>
+          </div>
+          <div class="info-wrapper">
+            <i class="fas far fa-envelope"></i>
+            <div>
+              <p>Email</p>
+              <p>hyeonseong0305@gmail.com</p>
+            </div>
+          </div>
+          <div class="info-wrapper">
+            <i class="fas fa-school"></i>
+            <div>
+              <p>Univ</p>
+              <p>광운대학교 정보융합학부</p>
+            </div>
+          </div>
+        </div>
+
+        <form
+          method="post"
+          class="form-container"
+          onsubmit="handleSubmit(event)"
+        >
+          <div class="form-wrapper">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="form-wrapper">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" />
+          </div>
+          <div class="form-wrapper">
+            <label for="msg">Message</label>
+            <textarea name="msg" id="msg"></textarea>
+          </div>
+          <div class="form-wrapper">
+            <label for="submit"></label>
+            <input type="submit" value="제출" />
+          </div>
+        </form>
       </div>
     </section>
 

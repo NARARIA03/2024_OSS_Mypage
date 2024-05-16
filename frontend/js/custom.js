@@ -67,16 +67,16 @@ document.addEventListener("DOMContentLoaded", () => {
       if (textIdx < textList[listIdx].length) {
         typingElement.textContent += textList[listIdx].charAt(textIdx);
         textIdx += 1;
-        setTimeout(typing, 50);
+        setTimeout(typing, 40);
       } else {
         isDeleting = true;
-        setTimeout(typing, 700);
+        setTimeout(typing, 2000);
       }
     } else {
       if (textIdx > 0) {
         typingElement.textContent = textList[listIdx].substring(0, textIdx - 1);
         textIdx -= 1;
-        setTimeout(typing, 50);
+        setTimeout(typing, 40);
       } else {
         isDeleting = false;
         if (listIdx === 0) {
@@ -84,9 +84,20 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           listIdx -= 1;
         }
-        setTimeout(typing, 700);
+        setTimeout(typing, 2000);
       }
     }
   };
   typing();
 });
+
+// form 내에서 submit 버튼을 누르면 405 Error가 발생
+// 제출 기능까지는 구현하지 않을 것이므로 Alert 띄우는걸로 액션 대체
+/**
+ *
+ * @param {SubmitEvent} e
+ */
+const handleSubmit = (e) => {
+  e.preventDefault();
+  alert("폼 제출 기능은 구현되어 있지 않습니다!");
+};
