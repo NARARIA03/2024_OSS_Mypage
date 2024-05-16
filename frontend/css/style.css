@@ -222,8 +222,12 @@ body section .item-container div {
   border-radius: 15px;
   overflow: hidden;
 }
+/* 아이템 컨테이너 내 div 내 첫 번째 p에 bold체 적용 */
+section.features .item-container div p:nth-of-type(1) {
+  font-weight: bold;
+}
 /* features의 item-container 내 div 요소에 마우스를 올리면 그림자 발생 */
-body section.features .item-container div:hover {
+section.features .item-container div:hover {
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25);
   transform: scale(1.03);
   transition-duration: 0.3s;
@@ -379,7 +383,7 @@ section > div > h4 {
 }
 /* 제출 버튼 관련 스타일링 */
 .form-wrapper input[type="submit"] {
-  font-weight: bold;
+  font-weight: 500;
   padding: 0;
 }
 .form-wrapper input[type="submit"]:hover {
@@ -403,3 +407,194 @@ footer p {
 }
 
 /* ------------------------------------------------- */
+/* 반응형 디자인 */
+/* 모바일 (최대 480px) */
+@media (max-width: 480px) {
+  /* 전체적으로 폰트 크기 줄이기 */
+  header nav h1 {
+    font-size: 15px;
+  }
+  header nav div a {
+    font-size: 9px;
+  }
+  body section h1 {
+    font-size: 25px;
+  }
+  body section h2 {
+    font-size: 20px;
+  }
+  body section h3 {
+    font-size: 11px;
+  }
+  body section h4 {
+    font-size: 15px;
+  }
+  body section p {
+    font-size: 10px;
+  }
+  i {
+    font-size: 25px;
+  }
+  /* 모든 section 내 div의 가로 폭 지정 */
+  body section div {
+    width: 95%;
+  }
+  /* 데스크톱 UI에선 가로로 되어있는 contact 컴포넌트 배치를 세로로 변경*/
+  .contact-container {
+    flex-direction: column;
+  }
+  .info-container {
+    margin: 1px auto;
+    margin-bottom: 15px;
+  }
+  /* info-wrapper 내부 아이콘 크기 조절 */
+  .info-wrapper i {
+    font-size: 20px;
+  }
+  .info-wrapper i.fa-school {
+    font-size: 18px;
+  }
+  /* info-wrapper 내 div 내의 p 사이즈 조절 */
+  .info-wrapper div p:nth-of-type(1) {
+    font-size: 13px;
+    font-weight: bold;
+  }
+  .info-wrapper div p:nth-of-type(2) {
+    font-size: 11px;
+  }
+  /* form container 중앙 정렬 */
+  .form-container {
+    width: 95%;
+    margin: 1px auto;
+    padding-bottom: 15px;
+  }
+  /* form 내부 요소의 label 폰트를 bold로 변경하고 크기 조절 */
+  .form-wrapper label {
+    font-size: 13px;
+    font-weight: bold;
+  }
+  /* 제출 버튼 폰트 크기 조절 */
+  .form-wrapper input[type="submit"] {
+    font-weight: bold;
+    font-size: 13px;
+  }
+  /* footer 폰트 크기 조절 */
+  footer p {
+    font-size: 11px;
+  }
+}
+
+/* ------------------------------------------------- */
+/* 작은 태블릿 (481px ~ 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  /* 전체적으로 폰트 크기 줄이기 */
+  header nav h1 {
+    font-size: 20px;
+  }
+  header nav div a {
+    font-size: 14px;
+  }
+  body section h1 {
+    font-size: 30px;
+  }
+  body section h2 {
+    font-size: 25px;
+  }
+  body section h3 {
+    font-size: 16px;
+  }
+  body section h4 {
+    font-size: 20px;
+  }
+  body section p {
+    font-size: 15px;
+  }
+  i {
+    font-size: 30px;
+  }
+  /* 모든 section 내 div의 가로 폭 지정 */
+  body section div {
+    width: 85%;
+  }
+  /* 데스크톱 UI에선 가로로 되어있는 contact 컴포넌트 배치를 세로로 변경*/
+  .contact-container {
+    flex-direction: column;
+  }
+  .info-container {
+    margin: 1px auto;
+    margin-bottom: 15px;
+  }
+  /* info-wrapper 내부 아이콘 크기 조절 */
+  .info-wrapper i {
+    font-size: 25px;
+  }
+  .info-wrapper i.fa-school {
+    font-size: 23px;
+  }
+  /* info-wrapper 내 div 내의 p 사이즈 조절 */
+  .info-wrapper div p:nth-of-type(1) {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .info-wrapper div p:nth-of-type(2) {
+    font-size: 16px;
+  }
+  /* form container 중앙 정렬 */
+  .form-container {
+    width: 85%;
+    margin: 15px auto;
+    padding-bottom: 15px;
+  }
+  /* form 내부 요소의 label 폰트를 bold로 변경하고 크기 조절 */
+  .form-wrapper label {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  /* 제출 버튼 폰트 크기 조절 */
+  .form-wrapper input[type="submit"] {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  /* footer 폰트 크기 조절 */
+  /* footer 폰트 크기 조절 */
+  footer p {
+    font-size: 14px;
+  }
+}
+
+/* 태블릿 (769px ~ 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* 전체적으로 폰트 크기 줄이기 */
+  header nav h1 {
+    font-size: 20px;
+  }
+  header nav div a {
+    font-size: 14px;
+  }
+  body section h1 {
+    font-size: 35px;
+  }
+  body section h2 {
+    font-size: 30px;
+  }
+  body section h3 {
+    font-size: 21px;
+  }
+  body section h4 {
+    font-size: 25px;
+  }
+  body section p {
+    font-size: 17px;
+  }
+  i {
+    font-size: 35px;
+  }
+  /* 모든 section 내 div의 가로 폭 지정 */
+  body section div {
+    width: 80%;
+  }
+  /* footer 폰트 크기 조절 */
+  footer p {
+    font-size: 14px;
+  }
+}
