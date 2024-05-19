@@ -1,7 +1,18 @@
 /* CSS 초기화 */
 @import "./normalize.css";
+
 /* 폰트 추가 */
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+
+/* 색상 변수 */
+:root {
+  --black: #121212;
+  --primary-text: #aaa;
+  --secondary-text: #444;
+  --primary-bg: #eaeaea;
+  --secondary--bg: #f5f5f5;
+  --orange: #e74f4f;
+}
 
 /* ------------------------------------------------- */
 /* 애니메이션 키프레임 생성 */
@@ -23,7 +34,7 @@
     color: transparent;
   }
   50% {
-    color: #ffffff;
+    color: var(--primary-text);
   }
 }
 /* ------------------------------------------------- */
@@ -31,7 +42,7 @@
 /* 헤더 스타일 */
 header {
   width: 100%;
-  background-color: black;
+  background-color: var(--black);
   position: fixed;
   z-index: 3;
 }
@@ -46,12 +57,12 @@ header nav div {
   margin-right: 15px;
 }
 header nav h1 {
-  color: white;
+  color: var(--primary-text);
   margin: 15px;
   margin-left: 20px;
 }
 header nav div a {
-  color: white;
+  color: var(--primary-text);
   margin: 15px;
   font-weight: 500;
 }
@@ -79,11 +90,11 @@ body .introduction {
 }
 /* 홀수번째 section 배경은 살짝 회색 */
 body section:nth-of-type(2n-1) {
-  background-color: #f8f8f8;
+  background-color: var(--primary-bg);
 }
 /* 짝수번째 section 배경은 완전 흰색 */
 body section:nth-of-type(2n) {
-  background-color: white;
+  background-color: var(--secondary--bg);
 }
 /* introduction section 배경은 검정색으로 */
 body section.introduction {
@@ -94,7 +105,6 @@ body section.introduction {
 /* 백그라운드(z-index: 0) 동영상 배치하고 화면에 꽉 차게 지정 */
 body section.introduction video {
   height: 100vh;
-  background-color: black;
   object-fit: cover;
   object-position: center center;
   overflow: hidden;
@@ -107,7 +117,7 @@ body section.introduction .overlay {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 /* 백그라운드 동영상 위로 올라갈 텍스트 담긴 div 스타일링 */
@@ -131,7 +141,9 @@ h2,
 h3,
 h4,
 p,
-a {
+a,
+label,
+input {
   font-family: "Noto Sans KR", sans-serif;
   font-optical-sizing: auto;
 }
@@ -141,37 +153,49 @@ a {
 .introduction .content h3,
 .introduction .content h4,
 .introduction .content p {
-  color: white;
+  color: var(--primary-text);
   margin-bottom: 10px;
 }
 /* 텍스트 크기 및 여백 지정 */
 body section h1 {
+  color: var(--secondary-text);
   font-size: 45px;
   padding: 5px;
 }
 body section h2 {
+  color: var(--secondary-text);
   font-size: 40px;
   padding: 5px;
 }
 body section h3 {
+  color: var(--secondary-text);
   font-size: 35px;
   padding: 5px;
 }
 body section h4 {
+  color: var(--secondary-text);
   font-size: 25px;
   padding: 5px;
 }
 body section p {
+  color: var(--secondary-text);
   font-size: 20px;
   padding: 5px;
 }
 /* 텍스트 강조용 span 스타일 */
 body section span {
-  color: #ed4848;
+  color: var(--orange);
   font-weight: bold;
 }
+/* label, input 태그 스타일 */
+body section label,
+body section input {
+  color: var(--secondary-text);
+}
+
 /* Font Aweasome 관련 스타일 */
 i {
+  color: var(--secondary-text);
   font-size: 50px;
   display: block;
   align-content: center;
@@ -185,7 +209,7 @@ nav h1:hover {
 }
 /* introduction 하단에 배치한 아래방향 화살표 아이콘 */
 i#mouse-icon {
-  color: white;
+  color: var(--primary-text);
   position: absolute;
   bottom: 40px;
   animation: bounce 2s ease-in-out infinite;
@@ -228,7 +252,7 @@ section.features .item-container div p:nth-of-type(1) {
 }
 /* features의 item-container 내 div 요소에 마우스를 올리면 그림자 발생 */
 section.features .item-container div:hover {
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 15px 15px 25px rgba(0, 0, 0, 0.4);
   transform: scale(1.03);
   transition-duration: 0.3s;
 }
@@ -246,7 +270,7 @@ div.portfolio-container {
 /* portfolio-wrapper 안의 dropdown-wrapper와 dropdown-detail를 감싸는 스타일 */
 div.portfolio-wrapper {
   display: block;
-  border: 1px solid black;
+  border: 0.5px solid var(--black);
   border-radius: 15px;
   width: 100%;
   margin-bottom: 15px;
@@ -332,18 +356,22 @@ section > div > h4 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  border: 0.5px solid var(--secondary-text);
   flex: 0.6;
   margin-left: 20px;
   height: 550px;
 }
 /* info-wrapper는 아이콘과 텍스트를 좌우로 배치 */
 .info-wrapper {
-  border-bottom: 1px solid black;
+  border-bottom: 0.5px solid var(--secondary-text);
   width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 10px;
+}
+/* 마지막 info-wrapper에는 하단에 선 없애기 */
+.info-wrapper:last-child {
+  border-bottom: none;
 }
 /* info-wrapper 내부 아이콘 크기 조절 */
 .info-wrapper i {
@@ -369,13 +397,15 @@ section > div > h4 {
 /* form 내부 요소의 label 폰트를 bold로 변경 */
 .form-wrapper label {
   font-weight: bold;
+  margin-bottom: 5px;
 }
 /* 이름, 제목을 입력받는 input 태그와 textarea 태그 스타일 */
 .form-wrapper input,
 .form-wrapper textarea {
   height: 40px;
   border-radius: 15px;
-  border: 1px solid black;
+  border: 0.5px solid var(--secondary-text);
+  background-color: var(--primary-bg);
   padding: 15px;
 }
 .form-wrapper textarea {
@@ -383,33 +413,80 @@ section > div > h4 {
 }
 /* 제출 버튼 관련 스타일링 */
 .form-wrapper input[type="submit"] {
-  font-weight: 500;
+  font-weight: bold;
   padding: 0;
 }
 .form-wrapper input[type="submit"]:hover {
-  background-color: yellow;
+  background-color: var(--secondary-text);
+  color: var(--primary-bg);
   transition: all 0.7s;
 }
 /* ------------------------------------------------- */
 
 /* footer 스타일 */
 footer {
-  background-color: black;
-  padding: 20px;
+  background-color: var(--black);
   display: flex;
-  flex-direction: column;
-
+  justify-content: center;
+}
+footer p,
+footer address,
+footer h1,
+footer ul li a {
+  color: var(--primary-text);
+  padding: 5px;
+}
+.footer-container {
+  width: 70%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.footer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 0.5px solid var(--secondary-text);
+}
+.footer-wrapper ul {
+  display: flex;
   align-items: center;
 }
-footer p {
-  color: white;
-  padding: 5px;
+.footer-wrapper ul li {
+  margin-left: 12px;
+}
+.footer-wrapper ul li a {
+  font-size: 13px;
+}
+.footer-wrapper ul li:hover {
+  transform: scale(1.15);
+  transition: all 0.3s;
+}
+.footer-wrapper h1 {
+  font-size: 25px;
+}
+
+.footer-addr-wrapper address {
+  margin-top: 10px;
+  font-size: 13px;
+}
+.footer-addr-wrapper p {
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+.footer-info-wrapper {
+  margin: 0px;
+  padding: 0px;
+  margin-top: 2px;
+}
+.footer-info-wrapper p {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin: 0px;
 }
 
 /* ------------------------------------------------- */
 /* 반응형 디자인 */
-/* 모바일 (최대 480px) */
-@media (max-width: 480px) {
+/* 모바일 (최대 500px) */
+@media (max-width: 500px) {
   /* 전체적으로 폰트 크기 줄이기 */
   header nav h1 {
     font-size: 15px;
@@ -473,20 +550,33 @@ footer p {
     font-size: 13px;
     font-weight: bold;
   }
-  /* 제출 버튼 폰트 크기 조절 */
-  .form-wrapper input[type="submit"] {
-    font-weight: bold;
+  /* footer 폰트 크기 조절 */
+  .footer-container {
+    width: 90%;
+  }
+  .footer-wrapper ul li a {
+    font-size: 8px;
+  }
+  .footer-wrapper h1 {
     font-size: 13px;
   }
-  /* footer 폰트 크기 조절 */
-  footer p {
-    font-size: 11px;
+  .footer-wrapper h1 a {
+    font-size: 13px;
+  }
+  .footer-addr-wrapper address {
+    font-size: 6px;
+    margin-top: 3px;
+    padding-bottom: 3px;
+  }
+  .footer-addr-wrapper p {
+    font-size: 5px;
+    padding-top: 0px;
   }
 }
 
 /* ------------------------------------------------- */
-/* 작은 태블릿 (481px ~ 768px) */
-@media (min-width: 481px) and (max-width: 768px) {
+/* 작은 태블릿 (500px ~ 768px) */
+@media (min-width: 500px) and (max-width: 768px) {
   /* 전체적으로 폰트 크기 줄이기 */
   header nav h1 {
     font-size: 20px;
@@ -556,9 +646,23 @@ footer p {
     font-weight: 500;
   }
   /* footer 폰트 크기 조절 */
-  /* footer 폰트 크기 조절 */
-  footer p {
-    font-size: 14px;
+  .footer-wrapper ul li a {
+    font-size: 13px;
+  }
+  .footer-wrapper h1 {
+    font-size: 20px;
+  }
+  .footer-wrapper h1 a {
+    font-size: 20px;
+  }
+  .footer-addr-wrapper address {
+    font-size: 12px;
+    margin-top: 3px;
+    padding-bottom: 3px;
+  }
+  .footer-addr-wrapper p {
+    font-size: 10px;
+    padding-top: 0px;
   }
 }
 
@@ -594,7 +698,25 @@ footer p {
     width: 80%;
   }
   /* footer 폰트 크기 조절 */
-  footer p {
+  .footer-container {
+    width: 80%;
+  }
+  .footer-wrapper ul li a {
+    font-size: 15px;
+  }
+  .footer-wrapper h1 {
+    font-size: 23px;
+  }
+  .footer-wrapper h1 a {
+    font-size: 23px;
+  }
+  .footer-addr-wrapper address {
     font-size: 14px;
+    margin-top: 3px;
+    padding-bottom: 3px;
+  }
+  .footer-addr-wrapper p {
+    font-size: 12px;
+    padding-top: 0px;
   }
 }
