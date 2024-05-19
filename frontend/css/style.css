@@ -384,6 +384,7 @@ body section .item-container > div {
 }
 
 /* ------------------------------------------------- */
+
 /* section.portfolio 관련 스타일 */
 /* portfolio-container 내 portfolio-wrapper 요소 스타일 */
 div.portfolio-container {
@@ -399,11 +400,12 @@ div.portfolio-wrapper {
   border: 0.5px solid var(--black);
   border-radius: 15px;
   width: 100%;
+  background-color: white;
   margin-bottom: 15px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
 }
 div.portfolio-wrapper:hover {
-  /* transform: scale(1.03); */
-  background-color: #dfdfdf;
+  transform: scale(1.03);
   transition-duration: 0.3s;
 }
 /* portfolio 썸네일과 제목, 상세보기 버튼이 담긴 wrapper 스타일 */
@@ -413,7 +415,8 @@ div.dropdown-wrapper {
 }
 /* portfolio 썸네일 스타일 */
 div.dropdown-wrapper div {
-  flex: 0.3;
+  width: 80px;
+  height: 80px;
   border-radius: 15px;
   overflow: hidden;
   padding: 0px;
@@ -423,11 +426,30 @@ div.dropdown-wrapper div {
 div.dropdown-wrapper p {
   display: block;
   flex: 1;
+  font-size: 17px;
 }
 /* portfolio 상세정보 텍스트 스타일 */
-div.dropdown-detail p {
-  margin: auto 15px;
+.dropdown-detail,
+.dropdown,
+.dropdown div {
+  width: 100%;
 }
+div.dropdown-detail p {
+  font-size: 15px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+/* 문서, 앱스토어, 구글플레이 아이콘 조절 */
+.fa-google-play,
+.fa-app-store-ios,
+.fa-file-alt,
+.fa-chrome,
+.fa-github {
+  font-size: 30px;
+  padding-left: 0px;
+}
+
 /* div.dropdown-detail을 보여줬다 껐다 하기 위한 클래스 */
 .hide {
   display: none;
@@ -839,11 +861,11 @@ footer ul li a {
   }
 
   .grid-container p:nth-of-type(1) {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .grid-container p:nth-of-type(2) {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   /* 데스크톱 UI에선 가로로 되어있는 contact 컴포넌트 배치를 세로로 변경*/
