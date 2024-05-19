@@ -251,6 +251,7 @@ body section .item-container > div {
   margin-top: 10px;
   border-radius: 15px;
   overflow: hidden;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .profile-image-wrapper img {
@@ -269,6 +270,7 @@ body section .item-container > div {
 /* github 및 instargram 아이콘 배치 및 디자인 */
 .self-introduction ul {
   display: flex;
+  margin-left: 5px;
 }
 
 .self-introduction ul li a i {
@@ -289,7 +291,7 @@ body section .item-container > div {
   width: 85%;
   height: 300px;
   overflow-y: hidden;
-  background-color: white;
+  background-color: var(--secondary--bg);
   padding: 10px;
   border-radius: 15px;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
@@ -319,7 +321,7 @@ body section .item-container > div {
   background-color: #eace14;
 }
 .grid-container > div:nth-of-type(3):hover p {
-  color: var(--primary-text);
+  color: #444;
 }
 
 .grid-container > div:nth-of-type(4):hover {
@@ -507,19 +509,23 @@ section > div > h4 {
   flex: 0.6;
   margin-left: 20px;
   height: 550px;
+  border-radius: 15px;
+  background-color: var(--secondary--bg);
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
 }
 /* info-wrapper는 아이콘과 텍스트를 좌우로 배치 */
 .info-wrapper {
-  border-bottom: 0.5px solid var(--secondary-text);
+  border: 0.5px solid var(--secondary-text);
   width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  margin-bottom: 15px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background-color: var(--secondary--bg);
 }
-/* 마지막 info-wrapper에는 하단에 선 없애기 */
-.info-wrapper:last-child {
-  border-bottom: none;
-}
+
 /* info-wrapper 내부 아이콘 크기 조절 */
 .info-wrapper i {
   font-size: 30px;
@@ -552,9 +558,10 @@ section > div > h4 {
   height: 40px;
   border-radius: 15px;
   border: 0.5px solid var(--secondary-text);
-  background-color: var(--primary-bg);
+  background-color: var(--secondary--bg);
   padding: 15px;
 }
+
 .form-wrapper textarea {
   height: 250px;
 }
@@ -720,6 +727,29 @@ footer ul li a {
     font-size: 13px;
   }
 
+  /* portfolio 컴포넌트 크기 조절 */
+  /* portfolio 제목 스타일 */
+  div.dropdown-wrapper p {
+    display: block;
+    flex: 1;
+    font-size: 11px;
+  }
+  div.dropdown-detail p {
+    font-size: 9px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  /* 문서, 앱스토어, 구글플레이 아이콘 조절 */
+  .fa-google-play,
+  .fa-app-store-ios,
+  .fa-file-alt,
+  .fa-chrome,
+  .fa-github {
+    font-size: 20px;
+    padding-left: 0px;
+  }
+
   /* 데스크톱 UI에선 가로로 되어있는 contact 컴포넌트 배치를 세로로 변경*/
   .contact-container {
     flex-direction: column;
@@ -868,6 +898,31 @@ footer ul li a {
     font-size: 12px;
   }
 
+  /* portfolio 컴포넌트 크기 조절 */
+  /* portfolio 제목 스타일 */
+  div.dropdown-wrapper p {
+    display: block;
+    flex: 1;
+    font-size: 14px;
+  }
+
+  div.dropdown-detail p {
+    font-size: 12px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  /* 문서, 앱스토어, 구글플레이 아이콘 조절 */
+  .fa-google-play,
+  .fa-app-store-ios,
+  .fa-file-alt,
+  .fa-chrome,
+  .fa-github {
+    font-size: 25px;
+    padding-left: 0px;
+  }
+
   /* 데스크톱 UI에선 가로로 되어있는 contact 컴포넌트 배치를 세로로 변경*/
   .contact-container {
     flex-direction: column;
@@ -908,6 +963,9 @@ footer ul li a {
     font-weight: 500;
   }
   /* footer 폰트 크기 조절 */
+  .footer-container {
+    width: 90%;
+  }
   .footer-wrapper ul li a {
     font-size: 13px;
   }
