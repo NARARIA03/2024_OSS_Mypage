@@ -257,6 +257,17 @@ body section .item-container > div {
   object-position: center -80px;
   transform: scale(1.6);
 }
+/* 자기소개 텍스트 크기 조절 */
+.self-introduction p {
+  font-size: 16px;
+}
+/* github 및 instargram 아이콘 배치 및 디자인 */
+.self-introduction ul {
+  display: flex;
+}
+.self-introduction ul li a i {
+  font-size: 30px;
+}
 /* 아이템 컨테이너 내 div 내 img에 border 적용 */
 .item-container div img {
   border-radius: 15px;
@@ -361,7 +372,6 @@ section > div > h4 {
 }
 /* info-container는 좌측에 0.35만큼 배치 */
 .info-container {
-  /* border: 1px solid blue; */
   flex: 0.4;
   margin-right: 20px;
   height: 600px;
