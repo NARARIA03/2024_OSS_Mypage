@@ -7,7 +7,7 @@
 /* 색상 변수 */
 :root {
   --black: #121212;
-  --primary-text: #aaa;
+  --primary-text: #ddd;
   --secondary-text: #444;
   --primary-bg: #eaeaea;
   --secondary--bg: #f5f5f5;
@@ -286,6 +286,7 @@ body section .item-container > div {
   grid-template-rows: repeat(2, auto);
   gap: 30px;
   margin-bottom: 15px;
+  margin-top: 15px;
 }
 .grid-container > div {
   width: 85%;

@@ -1,26 +1,29 @@
 /**
  * @description div 요소에 hide를 붙였다 뗐다 하는 함수
  * @param {Element} portfolioWrapper
+ * @param {Element} icon
  */
-const toggleDropdownDetail = (portfolioWrapper) => {
+const toggleDropdownDetail = (portfolioWrapper, icon) => {
   console.log("toggleDropdownDetail 함수 시작");
   let isVisible = false;
   for (let i = 0; i < portfolioWrapper.classList.length; i++) {
     if (portfolioWrapper.classList[i] === "hide") {
       portfolioWrapper.classList.remove("hide");
+      icon.classList.remove("fa-arrow-alt-circle-down");
+      icon.classList.add("fa-arrow-alt-circle-up");
       isVisible = true;
     }
   }
   if (!isVisible) {
     portfolioWrapper.classList.add("hide");
+    icon.classList.remove("fa-arrow-alt-circle-up");
+    icon.classList.add("fa-arrow-alt-circle-down");
   }
 };
 
 let portfolioWrapperList = document.querySelectorAll(".portfolio-wrapper");
 let navBarAnchorList = document.querySelectorAll("header nav div a");
 let homeLogo = document.querySelector("header nav h1");
-// console.log(poortfolioWrapperList[0].children[0].children[2]);
-console.log(navBarAnchorList);
 
 // portfolio 자세히 보기 기능을 위한 eventListener 등록
 for (let portfolioWrapper of portfolioWrapperList) {
@@ -29,7 +32,7 @@ for (let portfolioWrapper of portfolioWrapperList) {
     let dropdownDetail = portfolioWrapper.children[1];
     // console.log(dropdownDetail);
     // console.log(e);
-    toggleDropdownDetail(dropdownDetail);
+    toggleDropdownDetail(dropdownDetail, icon);
   });
 }
 
