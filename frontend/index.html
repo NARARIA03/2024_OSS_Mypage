@@ -10,6 +10,13 @@
       crossorigin="anonymous"
     ></script>
     <script src="js/custom.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"
+      integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="js/guestbook.js" defer></script>
   </head>
   <body>
     <!-- 상단바, z-index: 3 -->
@@ -344,29 +351,31 @@
               <input type="submit" value="작성하기" />
             </div>
           </form>
-          <div class="guestbook-item">
-            <button>X</button>
-            <p class="guestbook-title">타이틀</p>
-            <p>이름</p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque
-              doloribus facere, officia odio consequatur architecto rem ea
-              laboriosam, voluptatem quos necessitatibus corporis voluptate
-              eligendi dolores nisi. Laboriosam mollitia ipsa doloribus!
-            </p>
-            <p>타임스탬프</p>
-          </div>
-          <div class="guestbook-item">
-            <button>X</button>
-            <p class="guestbook-title">타이틀</p>
-            <p>이름</p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque
-              doloribus facere, officia odio consequatur architecto rem ea
-              laboriosam, voluptatem quos necessitatibus corporis voluptate
-              eligendi dolores nisi. Laboriosam mollitia ipsa doloribus!
-            </p>
-            <p>타임스탬프</p>
+          <div class="guestbook-wrapper">
+            <div class="guestbook-item">
+              <button>X</button>
+              <p class="guestbook-title">타이틀</p>
+              <p>이름</p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque
+                doloribus facere, officia odio consequatur architecto rem ea
+                laboriosam, voluptatem quos necessitatibus corporis voluptate
+                eligendi dolores nisi. Laboriosam mollitia ipsa doloribus!
+              </p>
+              <p>타임스탬프</p>
+            </div>
+            <div class="guestbook-item">
+              <button>X</button>
+              <p class="guestbook-title">타이틀</p>
+              <p>이름</p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque
+                doloribus facere, officia odio consequatur architecto rem ea
+                laboriosam, voluptatem quos necessitatibus corporis voluptate
+                eligendi dolores nisi. Laboriosam mollitia ipsa doloribus!
+              </p>
+              <p>타임스탬프</p>
+            </div>
           </div>
         </div>
       </div>

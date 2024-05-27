@@ -93,14 +93,3 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   typing();
 });
-
-// form 내에서 submit 버튼을 누르면 405 Error가 발생
-// 제출 기능까지는 구현하지 않을 것이므로 Alert 띄우는걸로 액션 대체
-/**
- *
- * @param {SubmitEvent} e
- */
-const handleSubmit = (e) => {
-  e.preventDefault();
-  alert("폼 제출 기능은 구현되어 있지 않습니다!");
-};

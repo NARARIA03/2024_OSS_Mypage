@@ -506,8 +506,10 @@ section > div > h4 {
   flex: 0.6;
   flex-direction: column;
   width: 100%;
-  justify-content: center;
   align-items: center;
+}
+.guestbook-wrapper {
+  width: 100%;
 }
 /* 방명록 아이템 하나하나의 스타일 */
 .guestbook-item {
