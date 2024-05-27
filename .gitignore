@@ -1,2 +1,8 @@
+# frontend ignorre
 /frontend/.DS_Store
 /.DS_Store
+
+# backend ignore
+/backend/.DS_Store
+/backend/__pycache__
+/backend/.venv  
