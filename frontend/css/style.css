@@ -619,6 +619,7 @@ section > div > h4 {
 
 .form-wrapper textarea {
   height: 250px;
+  resize: none;
 }
 /* 제출 버튼 관련 스타일링 */
 .form-wrapper input[type="submit"] {
