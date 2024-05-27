@@ -321,29 +321,54 @@
             </div>
           </div>
         </div>
-
-        <form
-          method="post"
-          class="form-container"
-          onsubmit="handleSubmit(event)"
-        >
-          <div class="form-wrapper">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" />
+        <div class="guestbook-container">
+          <form
+            method="post"
+            class="form-container"
+            onsubmit="handleSubmit(event)"
+          >
+            <div class="form-wrapper">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" />
+            </div>
+            <div class="form-wrapper">
+              <label for="title">Title</label>
+              <input type="text" name="title" id="title" />
+            </div>
+            <div class="form-wrapper">
+              <label for="msg">Message</label>
+              <textarea name="msg" id="msg"></textarea>
+            </div>
+            <div class="form-wrapper">
+              <label for="submit"></label>
+              <input type="submit" value="작성하기" />
+            </div>
+          </form>
+          <div class="guestbook-item">
+            <button>X</button>
+            <p class="guestbook-title">타이틀</p>
+            <p>이름</p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque
+              doloribus facere, officia odio consequatur architecto rem ea
+              laboriosam, voluptatem quos necessitatibus corporis voluptate
+              eligendi dolores nisi. Laboriosam mollitia ipsa doloribus!
+            </p>
+            <p>타임스탬프</p>
           </div>
-          <div class="form-wrapper">
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title" />
+          <div class="guestbook-item">
+            <button>X</button>
+            <p class="guestbook-title">타이틀</p>
+            <p>이름</p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque
+              doloribus facere, officia odio consequatur architecto rem ea
+              laboriosam, voluptatem quos necessitatibus corporis voluptate
+              eligendi dolores nisi. Laboriosam mollitia ipsa doloribus!
+            </p>
+            <p>타임스탬프</p>
           </div>
-          <div class="form-wrapper">
-            <label for="msg">Message</label>
-            <textarea name="msg" id="msg"></textarea>
-          </div>
-          <div class="form-wrapper">
-            <label for="submit"></label>
-            <input type="submit" value="제출" />
-          </div>
-        </form>
+        </div>
       </div>
     </section>
 
@@ -370,7 +395,7 @@
             <p>2022204045 최현성</p>
           </div>
           <address>
-            서울특별시 노원구 동일로 245길 162 (상계동, 은빛1단지아파트) <br />
+            서울특별시 노원구 동일로 245길 162 <br />
             TEL: 010-4069-7407
           </address>
           <p>

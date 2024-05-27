@@ -500,20 +500,72 @@ section > div > h4 {
   margin-right: 20px;
   height: 600px;
 }
-/* form-container는 우측에 0.65만큼 배치 */
+/* form 부분과 guestbook을 함께 감싸는 컨테이너 */
+.guestbook-container {
+  display: flex;
+  flex: 0.6;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+/* 방명록 아이템 하나하나의 스타일 */
+.guestbook-item {
+  position: relative;
+  width: 100%;
+  margin: 20px auto;
+  flex: 0.6;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 20px;
+  border: 0.5px solid var(--secondary-text);
+  border-radius: 15px;
+  background-color: var(--secondary--bg);
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+}
+/* 방명록 아이템 내 X 버튼 스타일링 */
+.guestbook-item button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  background-color: var(--primary-text);
+  border-radius: 5px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+/* 버튼 클릭 시 백그라운드 색상 변경으로 효과 주기 */
+.guestbook-item button:active {
+  background-color: var(--primary-bg);
+}
+.guestbook-item:hover button {
+  display: block;
+}
+/* 방명록 아이템 폰트 크기 조절 */
+.guestbook-item p {
+  font-size: 15px;
+}
+/* 방명록 아이템의 타이틀은 bold체로 */
+.guestbook-title {
+  font-weight: bold;
+}
+/* 입력 form을 감싸는 form-container */
 .form-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 0.5px solid var(--secondary-text);
-  flex: 0.6;
   margin-left: 20px;
   height: 550px;
   border-radius: 15px;
   background-color: var(--secondary--bg);
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
 }
+
 /* info-wrapper는 아이콘과 텍스트를 좌우로 배치 */
 .info-wrapper {
   border: 0.5px solid var(--secondary-text);
@@ -570,6 +622,7 @@ section > div > h4 {
 .form-wrapper input[type="submit"] {
   font-weight: bold;
   padding: 0;
+  margin-bottom: 15px;
 }
 .form-wrapper input[type="submit"]:hover {
   background-color: var(--secondary-text);
@@ -694,14 +747,16 @@ footer ul li a {
     margin: 0px auto;
   }
   .self-introduction h4 {
-    font-size: 20px;
+    font-size: 15px;
   }
   .self-introduction p {
-    font-size: 13px;
+    font-size: 11px;
+  }
+  .self-introduction ul li a i {
+    font-size: 25px;
   }
 
   /* features 컴포넌트 모바일에 맞게 재배치 */
-
   .grid-container {
     justify-items: center;
     grid-template-columns: repeat(1, 1fr);
@@ -709,7 +764,7 @@ footer ul li a {
   }
 
   .grid-container > div {
-    height: 230px;
+    height: 200px;
   }
 
   .grid-container > div:hover {
@@ -721,11 +776,11 @@ footer ul li a {
   }
 
   .grid-container p:nth-of-type(1) {
-    font-size: 17px;
+    font-size: 13px;
   }
 
   .grid-container p:nth-of-type(2) {
-    font-size: 13px;
+    font-size: 11px;
   }
 
   /* portfolio 컴포넌트 크기 조절 */
@@ -733,10 +788,14 @@ footer ul li a {
   div.dropdown-wrapper p {
     display: block;
     flex: 1;
-    font-size: 11px;
+    font-size: 10px;
+  }
+  div.dropdown-wrapper div:nth-of-type(1) {
+    width: 40px;
+    height: 40px;
   }
   div.dropdown-detail p {
-    font-size: 9px;
+    font-size: 10px;
     margin-bottom: 5px;
     margin-left: 5px;
     margin-right: 5px;
@@ -747,7 +806,7 @@ footer ul li a {
   .fa-file-alt,
   .fa-chrome,
   .fa-github {
-    font-size: 20px;
+    font-size: 17px;
     padding-left: 0px;
   }
 
@@ -756,33 +815,54 @@ footer ul li a {
     flex-direction: column;
   }
   .info-container {
-    margin: 1px auto;
+    margin: 0px auto;
     margin-bottom: 15px;
   }
   /* info-wrapper 내부 아이콘 크기 조절 */
   .info-wrapper i {
-    font-size: 20px;
+    font-size: 15px;
   }
   .info-wrapper i.fa-school {
-    font-size: 18px;
+    font-size: 13px;
   }
   /* info-wrapper 내 div 내의 p 사이즈 조절 */
   .info-wrapper div p:nth-of-type(1) {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
   }
   .info-wrapper div p:nth-of-type(2) {
-    font-size: 11px;
+    font-size: 10px;
   }
   /* form container 중앙 정렬 */
   .form-container {
     width: 95%;
+    margin: 0px auto;
+  }
+  .guestbook-item {
+    margin: 0px auto;
+    margin-top: 20px;
+  }
+  .guestbook-item p {
+    font-size: 11px;
+  }
+  .guestbook-item button {
+    font-size: 10px;
+  }
+  /* guestbook-container 중앙 정렬 */
+  .guestbook-container {
+    width: 95%;
     margin: 1px auto;
-    padding-bottom: 15px;
+  }
+  .form-container {
+    width: 100%;
   }
   /* form 내부 요소의 label 폰트를 bold로 변경하고 크기 조절 */
   .form-wrapper label {
-    font-size: 13px;
+    font-size: 11px;
+    font-weight: bold;
+  }
+  .form-wrapper input[type="submit"] {
+    font-size: 11px;
     font-weight: bold;
   }
   /* footer 폰트 크기 조절 */
@@ -799,12 +879,12 @@ footer ul li a {
     font-size: 13px;
   }
   .footer-addr-wrapper address {
-    font-size: 6px;
+    font-size: 7px;
     margin-top: 3px;
     padding-bottom: 3px;
   }
   .footer-addr-wrapper p {
-    font-size: 5px;
+    font-size: 7px;
     padding-top: 0px;
   }
 }
@@ -814,13 +894,13 @@ footer ul li a {
 @media (min-width: 500px) and (max-width: 768px) {
   /* 전체적으로 폰트 크기 줄이기 */
   header nav h1 {
-    font-size: 20px;
+    font-size: 17px;
   }
   header nav div a {
-    font-size: 14px;
+    font-size: 12px;
   }
   body section h1 {
-    font-size: 30px;
+    font-size: 27px;
   }
   body section h2 {
     font-size: 25px;
@@ -832,7 +912,7 @@ footer ul li a {
     font-size: 20px;
   }
   body section p {
-    font-size: 15px;
+    font-size: 12px;
   }
   i {
     font-size: 30px;
@@ -868,7 +948,10 @@ footer ul li a {
     font-size: 18px;
   }
   .self-introduction p {
-    font-size: 13px;
+    font-size: 12px;
+  }
+  .self-introduction ul li a i {
+    font-size: 25px;
   }
 
   /* features 컴포넌트 모바일에 맞게 재배치 */
@@ -880,7 +963,7 @@ footer ul li a {
   }
 
   .grid-container > div {
-    height: 230px;
+    height: 250px;
   }
 
   .grid-container > div:hover {
@@ -892,7 +975,7 @@ footer ul li a {
   }
 
   .grid-container p:nth-of-type(1) {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .grid-container p:nth-of-type(2) {
@@ -904,11 +987,15 @@ footer ul li a {
   div.dropdown-wrapper p {
     display: block;
     flex: 1;
-    font-size: 14px;
+    font-size: 12px;
+  }
+  .dropdown-wrapper div:nth-of-type(1) {
+    width: 50px;
+    height: 50px;
   }
 
   div.dropdown-detail p {
-    font-size: 12px;
+    font-size: 10px;
     margin-bottom: 5px;
     margin-left: 5px;
     margin-right: 5px;
@@ -934,33 +1021,47 @@ footer ul li a {
   }
   /* info-wrapper 내부 아이콘 크기 조절 */
   .info-wrapper i {
-    font-size: 25px;
+    font-size: 17px;
   }
   .info-wrapper i.fa-school {
-    font-size: 23px;
+    font-size: 15px;
   }
   /* info-wrapper 내 div 내의 p 사이즈 조절 */
   .info-wrapper div p:nth-of-type(1) {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
   }
   .info-wrapper div p:nth-of-type(2) {
-    font-size: 16px;
+    font-size: 12px;
   }
+  /* guestbook container 중앙 정렬 */
+  .guestbook-container {
+    width: 95%;
+    margin: 1px auto;
+  }
+  .guestbook-item {
+    margin: 0px auto;
+    margin-bottom: 20px;
+  }
+  /* guestbook 폰트 크기 조절 */
+  .guestbook-item p {
+    font-size: 12px;
+  }
+
   /* form container 중앙 정렬 */
   .form-container {
-    width: 95%;
+    width: 100%;
     margin: 15px auto;
     padding-bottom: 15px;
   }
   /* form 내부 요소의 label 폰트를 bold로 변경하고 크기 조절 */
   .form-wrapper label {
-    font-size: 18px;
+    font-size: 12px;
     font-weight: bold;
   }
   /* 제출 버튼 폰트 크기 조절 */
   .form-wrapper input[type="submit"] {
-    font-size: 18px;
+    font-size: 12px;
     font-weight: 500;
   }
   /* footer 폰트 크기 조절 */
@@ -968,21 +1069,21 @@ footer ul li a {
     width: 90%;
   }
   .footer-wrapper ul li a {
-    font-size: 13px;
+    font-size: 11px;
   }
   .footer-wrapper h1 {
-    font-size: 20px;
+    font-size: 15px;
   }
   .footer-wrapper h1 a {
-    font-size: 20px;
+    font-size: 15px;
   }
   .footer-addr-wrapper address {
-    font-size: 12px;
+    font-size: 9px;
     margin-top: 3px;
     padding-bottom: 3px;
   }
   .footer-addr-wrapper p {
-    font-size: 10px;
+    font-size: 9px;
     padding-top: 0px;
   }
 }
@@ -1051,27 +1152,30 @@ footer ul li a {
   .grid-container p:nth-of-type(2) {
     font-size: 14px;
   }
-
+  /* guestbook 폰트 크기 조절 */
+  .guestbook-item p {
+    font-size: 14px;
+  }
   /* footer 폰트 크기 조절 */
   .footer-container {
     width: 80%;
   }
   .footer-wrapper ul li a {
-    font-size: 15px;
+    font-size: 12px;
   }
   .footer-wrapper h1 {
-    font-size: 23px;
+    font-size: 20px;
   }
   .footer-wrapper h1 a {
-    font-size: 23px;
+    font-size: 20px;
   }
   .footer-addr-wrapper address {
-    font-size: 14px;
+    font-size: 11px;
     margin-top: 3px;
     padding-bottom: 3px;
   }
   .footer-addr-wrapper p {
-    font-size: 12px;
+    font-size: 11px;
     padding-top: 0px;
   }
 }
