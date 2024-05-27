@@ -58,6 +58,7 @@ const postGuestbookData = (newGuestbookItem) => {
     .post(`${API_URL}/guestbook`, newGuestbookItem)
     .then((res) => {
       console.log(`result: ${res.data.msg}`);
+      getGuestbookData();
     })
     .catch((e) => {
       console.error(`post error: ${e}`);
@@ -171,5 +172,4 @@ window.addEventListener("DOMContentLoaded", (e) => {
 // 작성하기 버튼 누르면 실행되는 이벤트
 submitInput.addEventListener("click", (e) => {
   uploadGuestbookData(e);
-  getGuestbookData();
 });
