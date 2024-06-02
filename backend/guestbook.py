@@ -1,13 +1,9 @@
 from fastapi import APIRouter
 from model import Guestbook_Item
 from datetime import datetime
-import locale
 
 
 guestbook_router = APIRouter()
-# 한국으로 지역 설정, datetime에 사용
-locale.setlocale(locale.LC_TIME, "ko_KR.UTF-8")
-
 guestbook_list = []
 id = 0
 
@@ -26,8 +22,7 @@ async def add_guestbook(item: Guestbook_Item) -> dict:
     item.id = id
     # 해당 item의 타임스탬프 값 서버에서 업데이트
     now = datetime.now()
-    timestamp = now.strftime("%Y-%m-%d(%a) %H:%M:%S")
-    item.timestamp = timestamp
+    item.timestamp = now
     guestbook_list.append(item)
     id += 1
     return {"msg": "success"}

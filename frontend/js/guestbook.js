@@ -1,4 +1,5 @@
 const API_URL = "http://44.220.221.72:9001";
+// const API_URL = "http://0.0.0.0:8080";
 
 /**
  * @description 방명록 컴포넌트가 위치해야 할 부모 컨테이너 선택
@@ -33,6 +34,23 @@ const messageInput = document.querySelector(
 const submitInput = document.querySelector(
   ".form-wrapper input[type='submit']"
 );
+
+/**
+ * @description timestamp로 담겨온 값을 포매팅 해서 반환하는 함수
+ * @param {string} dateTime
+ */
+const formatTimestamp = (dateTime) => {
+  const date = new Date(dateTime);
+
+  const year = date.getFullYear();
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const hours = ("0" + date.getHours()).slice(-2);
+  const minutes = ("0" + date.getMinutes()).slice(-2);
+  const seconds = ("0" + date.getSeconds()).slice(-2);
+
+  return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분 ${seconds}초`;
+};
 
 /**
  * @description get 방식으로 FastAPI의 방명록 리스트를 받아오는 함수
@@ -120,7 +138,9 @@ const updateGuestbookComponent = (guestbookList) => {
 
     // timestamp 역할을 하는 p 만들고 내용 넣고 guestbook-item div의 자식으로 추가
     let timestamp = document.createElement("p");
-    timestamp.innerText = `작성 시간: ${guestbookItem.timestamp}`;
+    timestamp.innerText = `작성 시간: ${formatTimestamp(
+      guestbookItem.timestamp
+    )}`;
     guestbookItemDiv.appendChild(timestamp);
 
     // 완성된 컴포넌트를 guestbookComponent의 자식으로 추가해서 완성
