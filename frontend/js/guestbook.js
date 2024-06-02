@@ -36,11 +36,13 @@ const submitInput = document.querySelector(
 );
 
 /**
- * @description timestamp로 담겨온 값을 포매팅 해서 반환하는 함수
+ * @description timestamp로 담겨온 값을 포매팅 해서 반환하는 함수, 버지니아 북부 시간을 서울 시간으로 보정한다
  * @param {string} dateTime
  */
 const formatTimestamp = (dateTime) => {
   const date = new Date(dateTime);
+  // 버지니아 북부 시간 + 9시간 -> 서울 시간
+  date.setHours(date.getHours() + 9);
 
   const year = date.getFullYear();
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
