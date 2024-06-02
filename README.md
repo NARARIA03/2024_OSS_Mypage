@@ -1,8 +1,20 @@
 # 24년 1학기 오픈소스소프트웨어 개인프로젝트
 
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+
+---
+
 ## 프로필
 
-`광운대학교 정보융합학부 2022204045 최현성`
+### 광운대학교 정보융합학부 2022204045 최현성
+
+---
 
 ## 사용 오픈소스
 
@@ -12,11 +24,15 @@
 - NginX: https://github.com/nginx/nginx
 - Docker: https://github.com/docker
 
+---
+
 ## 배포 주소
 
 Frontend: http://44.220.221.72:9000
 
 Backend: http://44.220.221.72:9001
+
+---
 
 ## 참고한 게시물
 
@@ -32,7 +48,7 @@ docker buildx 관련 정보: https://blog.taehun.dev/docker-buildx-
 
 ---
 
-## 결과물 간단한 소개
+## 결과물 소개
 
 ![introduction](/readme_image/introduction.png)
 처음 웹사이트에 들어오면 나오는 페이지 입니다.
@@ -138,5 +154,131 @@ footer에는 간단하게 소속과 주소 전화번호, 저작권 등을 명시
 - Policy는 아무런 기능이 구현되어있지 않은 a태그입니다. 클릭 시 최상단으로 이동합니다.
 - Github는 제 깃허브 프로필로 이동합니다.
 - Notion은 PS 기록 페이지로 연결해뒀습니다.
+
+---
+
+## FrontEnd 배포 (AWS EC2, NginX)
+
+이 레포지토리를 AWS EC2의 `/var/www` 경로에 clone 했습니다.
+
+```shell
+cd /var/www
+sudo git clone https://github.com/NARARIA03/24-1-OSS-Mypage-Proj
+```
+
+`프론트엔드` 페이지는 `9000`번 포트로 배포하려고 결정했으므로 NginX 설정 파일을 수정해줬습니다.
+
+```shell
+sudo vi /etc/nginx/sites-enabled/default
+```
+
+위 명령어로 에디터를 열고, 새 server 블록을 아래와 같이 추가해줬습니다.
+
+```
+...
+
+server {
+  listen 9000;
+  listen [::]:9000;
+
+  server_name _;
+  root /var/www/24-1-OSS-Mypage-Proj/frontend;
+  index index.html;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}
+```
+
+그리고 아래 명령어로 NginX를 재시작 해줬습니다.
+
+```shell
+sudo nginx -s reload
+```
+
+EC2 인스턴스 실행 시, NginX가 실행되도록 아래 명령어를 사용했습니다.
+https://phoenixnap.com/kb/nginx-start-stop-restart
+
+```shell
+sudo systemctl enable nginx
+```
+
+---
+
+## BackEnd 배포 (AWS EC2, Docker)
+
+백엔드 폴더에 `Dockerfile`, `.dockerignore` 두 개의 파일을 생성했습니다.
+
+- `Dockerfile`: `image`를 빌드하기 위해 사용되는 명령어를 적어두는 파일
+- `.dockerignore`: `image`를 빌드할 때, 포함될 필요 없는 파일을 적어두는 파일
+
+`FastAPI`를 배포하기 위해 들어가야 하는 `Dockerfile` 내용은 아래와 같습니다.
+
+```dockerfile
+FROM python:3.10
+
+WORKDIR /app/
+
+COPY . /app/
+
+RUN pip install -r requirements.txt
+
+EXPOSE 80
+
+CMD python main.py
+```
+
+단, `EXPOSE`의 경우는 **반드시 `uvicorn` 실행 시 사용하는 port**와 동일하게 맞춰야 합니다.\*\*
+
+`CMD`의 경우는 `uvicorn main:app --reload --host 0.0.0.0 --port 80`이 들어갈수도 있으나, 저같은 경우는 `main.py`의 하단부에 해당 코드를 명시해뒀기 때문에 `main.py`를 실행하도록 했습니다.
+
+```python
+...
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=80, reload=True)
+```
+
+`.dockerignore`의 경우, `FastAPI`가 생성하는 `__pycache__`, `Dockerfile`과 `.dockerignore`, 가상환경 폴더인 `.venv` 정도를 제외시키면 됩니다.
+
+```
+/.dockerignore
+/Dockerfile
+/.venv
+/__pycache__
+```
+
+`arm` 운영체제에서 `Docker image`를 빌드하는 경우, 반드시 `buildx`를 사용해 멀티 아키텍쳐에 대응하는 이미지를 빌드해야만 합니다. (아키텍쳐가 서로 다른 경우, 이미지를 컨테이너로 띄우지 못하고 아래와 같은 에러가 발생합니다)
+
+```shell
+WARNING: The requested image's platform (linux/arm64/v8) does not match the detected host platform (linux/amd64/v3) and no specific platform was requested exec /bin/sh: exec format error
+```
+
+`Docker Hub`에 새로운 레포지토리 `guestbookfastapi`를 생성하고, `Dockerfile`과 `buildx`를 사용해 arm과 amd64 모두 지원하는 이미지를 빌드 및 푸쉬합니다. (`Dockerfile`이 있는 폴더에서 아래 명령어 실행)
+
+```shell
+docker buildx build --platform linux/amd64,linux/arm64 -t hyunseong03/guestbookfastapi --push .
+```
+
+![dockerhub](/readme_image/dockerhub.png)
+
+이제 이 `docker image`를 AWS EC2에서 pull 해온 뒤 Container로 실행하면 백엔드 배포가 끝납니다.
+
+```shell
+sudo docker pull hyunseong03/guestbookfastapi
+sudo docker run -p 9001:80 --restart=always hyunseong03/guestbookfastapi
+```
+
+먼저 첫 번째 줄은 github에서 코드를 pull 해오는 것과 유사하게, docker hub에서 image를 pull 해오는 과정입니다. pull 해온 뒤 아래 명령어를 입력해서 잘 받아왔는지 확인이 가능합니다.
+
+```shell
+sudo docker images
+```
+
+두 번째 줄은 pull 해온 이미지를 Container로 띄우는 명령어입니다. 두 가지 옵션이 사용되었습니다.
+
+- `-p 9001:80`: 컨테이너 외부(EC2 컴퓨터)와 컨테이너 내부(uvicorn)의 포트를 연결하기 위한 옵션입니다. 따라서 `:` 기준 왼쪽 포트는 **접속 시 실제로 사용할 포트**를 입력해야 하고, `:` 기준 오른쪽 포트는 **uvicorn을 실행할 때 사용한 포트**를 입력해야 합니다.
+- `--restart=always`: EC2 인스턴스 실행 시, 자동으로 해당 이미지가 컨테이너로 실행되도록 하는 옵션입니다.
 
 ---
