@@ -1,4 +1,4 @@
-const API_URL = "http://0.0.0.0:8080";
+const API_URL = "http://44.220.221.72:9001";
 
 /**
  * @description 방명록 컴포넌트가 위치해야 할 부모 컨테이너 선택

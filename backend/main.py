@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from guestbook import guestbook_router
+import uvicorn
 
 
 app = FastAPI()
 
-origins = ["http://127.0.0.1:5500"]
+origins = ["http://127.0.0.1:5500", "http://44.220.221.72:9000"]
 
 
 # 방명록 라우터 연결
@@ -26,5 +27,5 @@ async def root() -> dict:
     return {"message": "2024 OSS Mypage Project, 2022204045 최현성"}
 
 
-# 배포 시 터미널 코드
-# nohup uvicorn main:app --reload --host 0.0.0.0 --port 8080 &
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=80, reload=True)
