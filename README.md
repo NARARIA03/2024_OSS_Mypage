@@ -36,6 +36,8 @@ Backend: http://44.220.221.72:9001
 
 ## 참고한 게시물
 
+웹페이지 디자인 참고: https://pensive-kowalevski-fdf325.netlify.app
+
 CSS 기본값 세팅: https://velog.io/@teo/2022-CSS-Reset-%EB%8B%A4%EC%8B%9C-%EC%8D%A8%EB%B3%B4%EA%B8%B0
 
 사용한 이미지 1: https://www.pexels.com/ko-kr/photo/c-574069/
