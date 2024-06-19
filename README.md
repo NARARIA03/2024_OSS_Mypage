@@ -28,9 +28,16 @@
 
 ## 배포 주소
 
-Frontend: http://44.220.221.72:9000
+~~Frontend: http://44.220.221.72:9000~~
 
-Backend: http://44.220.221.72:9001
+~~Backend: http://44.220.221.72:9001~~
+
+> AWS Learner lab 환경 배포 -> 개인 Ubuntu server로 배포  
+> Frontend는 여전히 NginX로 배포했고, Backend는 도커 대신 uvicorn을 사용해 생으로 배포했음
+
+Frontend: http://211.215.13.73:9000
+
+Backend: http://211.215.13.73:9001
 
 ---
 
