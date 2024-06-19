@@ -38,7 +38,7 @@ const submitInput = document.querySelector(".form-wrapper input[type='submit']")
 const formatTimestamp = (dateTime) => {
   const date = new Date(dateTime);
   // 버지니아 북부 시간 + 9시간 -> 서울 시간
-  date.setHours(date.getHours() + 9);
+  // date.setHours(date.getHours() + 9);
 
   const year = date.getFullYear();
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
