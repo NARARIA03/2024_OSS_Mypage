@@ -1,4 +1,4 @@
-const API_URL = "http://44.220.221.72:9001";
+const API_URL = "http://211.215.13.73:9001";
 // const API_URL = "http://0.0.0.0:8080";
 
 /**
@@ -23,17 +23,13 @@ const titleInput = document.querySelector(".form-wrapper input[name='title']");
  * @description 방명록 메시지 입력 컴포넌트 선택
  * @type {HTMLInputElement}
  */
-const messageInput = document.querySelector(
-  ".form-wrapper textarea[name='msg']"
-);
+const messageInput = document.querySelector(".form-wrapper textarea[name='msg']");
 
 /**
  * @description 방명록 작성하기 submit 컴포넌트 선택
  * @type {HTMLInputElement}
  */
-const submitInput = document.querySelector(
-  ".form-wrapper input[type='submit']"
-);
+const submitInput = document.querySelector(".form-wrapper input[type='submit']");
 
 /**
  * @description timestamp로 담겨온 값을 포매팅 해서 반환하는 함수, 버지니아 북부 시간을 서울 시간으로 보정한다
@@ -140,9 +136,7 @@ const updateGuestbookComponent = (guestbookList) => {
 
     // timestamp 역할을 하는 p 만들고 내용 넣고 guestbook-item div의 자식으로 추가
     let timestamp = document.createElement("p");
-    timestamp.innerText = `작성 시간: ${formatTimestamp(
-      guestbookItem.timestamp
-    )}`;
+    timestamp.innerText = `작성 시간: ${formatTimestamp(guestbookItem.timestamp)}`;
     guestbookItemDiv.appendChild(timestamp);
 
     // 완성된 컴포넌트를 guestbookComponent의 자식으로 추가해서 완성
