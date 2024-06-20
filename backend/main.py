@@ -29,7 +29,3 @@ app.add_middleware(
 @app.get("/")
 async def root() -> dict:
     return {"message": "2024 OSS Mypage Project, 2022204045 최현성"}
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=9001, reload=True)
