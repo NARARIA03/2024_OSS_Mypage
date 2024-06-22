@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from guestbook import guestbook_router
-import uvicorn
 
 
 app = FastAPI()

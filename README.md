@@ -33,7 +33,7 @@
 ~~Backend: http://44.220.221.72:9001~~
 
 > AWS Learner lab 환경 배포 -> 개인 Ubuntu server로 배포  
-> Frontend는 여전히 NginX로 배포했고, Backend는 도커 대신 uvicorn을 사용해 생으로 배포했음
+> Frontend는 NginX로 배포했고, Backend는 도커로 배포했음
 
 Frontend: http://211.215.13.73:9000
 
@@ -289,5 +289,73 @@ sudo docker images
 
 - `-p 9001:80`: 컨테이너 외부(EC2 컴퓨터)와 컨테이너 내부(uvicorn)의 포트를 연결하기 위한 옵션입니다. 따라서 `:` 기준 왼쪽 포트는 **접속 시 실제로 사용할 포트**를 입력해야 하고, `:` 기준 오른쪽 포트는 **uvicorn을 실행할 때 사용한 포트**를 입력해야 합니다.
 - `--restart=always`: EC2 인스턴스 실행 시, 자동으로 해당 이미지가 컨테이너로 실행되도록 하는 옵션입니다.
+
+---
+
+## BackEnd 배포 (개인 Ubuntu server, Docker)
+
+`main.py`의 소스코드와 `Dockerfile` 내용을 일부 수정했습니다.
+
+```python
+# 아래 코드 삭제
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=80, reload=True)
+```
+
+```dockerfile
+FROM python:3.10
+
+WORKDIR /app/
+
+COPY . /app/
+
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+EXPOSE 80
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+
+```
+
+도커파일의 수정 내역은 FastAPI 공식 문서의 Docker 항목을 참고해서 만들었습니다.
+
+https://www.joonas.io/fastapi/ko/deployment/docker/
+
+그리고 AWS에 배포할때와 동일하게 이미지로 빌드 및 Dockerhub에 푸쉬했습니다.
+
+```shell
+docker buildx build --platform linux/amd64,linux/arm64 -t hyunseong03/guestbookfastapi --push .
+```
+
+이후 개인 Ubuntu server에서 이미지를 pull 해왔습니다.
+
+```shell
+sudo docker pull hyunseong03/guestbookfastapi:latest
+```
+
+그리고 이 이미지를 컨테이너로 띄웠습니다. (몇몇 속성 추가)
+
+```shell
+sudo docker run -d -p 9001:80 --restart=always -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul hyunseong03/guestbookfastapi
+```
+
+**`-d`:**
+
+- 백그라운드에서 도커 컨테이너를 실행시키는 속성입니다.
+
+**`-p 9001:80`:**
+
+- 외부포트 9001로 접속하면, 컨테이너의 80번 포트로 연결하는 속성입니다.
+- uvicorn은 컨테이너에서 80번 포트로 실행되고 있기 때문에 필요합니다.
+
+**`--restart=always`:**
+
+- Ubuntu server가 재시작되면, 자동으로 이 컨테이너를 다시 실행하는 속성입니다.
+
+**`-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul`:**
+
+- 컨테이너의 시간대가 서울 시간대와 맞지 않는 문제가 발생해서 추가한 속성입니다.
+- 각 국가의 시간대를 저장하고 있는 `/etc/localtime` 파일을 `ro`라는 태그로 마운트하고
+- `TZ=Asia/Seoul` 이라는 환경변수를 `-e`를 사용해 추가해주면, 서울로 시간대를 설정 가능합니다.
 
 ---
