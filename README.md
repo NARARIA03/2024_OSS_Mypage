@@ -294,7 +294,31 @@ sudo docker images
 
 ## BackEnd 배포 (개인 Ubuntu server, Docker)
 
-`main.py`의 소스코드와 `Dockerfile` 내용을 일부 수정했습니다.
+백엔드 배포 이전에 FE의 방명록 시간 관련 로직을 수정해야 합니다.
+개인 Ubuntu server는 더이상 버지니아 주에 위치하지 않기 때문에 시간 관련 코드를 아래와 같이 수정합니다.
+
+```js
+/**
+ * @description timestamp로 담겨온 값을 포매팅 해서 반환하는 함수, 버지니아 북부 시간을 서울 시간으로 보정한다
+ * @param {string} dateTime
+ */
+const formatTimestamp = (dateTime) => {
+  const date = new Date(dateTime);
+  // 버지니아 북부 시간 + 9시간 -> 서울 시간
+  // date.setHours(date.getHours() + 9); <- 이 부분 주석처리
+
+  const year = date.getFullYear();
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const hours = ("0" + date.getHours()).slice(-2);
+  const minutes = ("0" + date.getMinutes()).slice(-2);
+  const seconds = ("0" + date.getSeconds()).slice(-2);
+
+  return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분 ${seconds}초`;
+};
+```
+
+그 다음으로 BE의 `main.py` 소스코드와 `Dockerfile` 내용을 일부 수정했습니다.
 
 ```python
 # 아래 코드 삭제
@@ -339,23 +363,42 @@ sudo docker pull hyunseong03/guestbookfastapi:latest
 sudo docker run -d -p 9001:80 --restart=always -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul hyunseong03/guestbookfastapi
 ```
 
-**`-d`:**
+- **`-d`:**
 
-- 백그라운드에서 도커 컨테이너를 실행시키는 속성입니다.
+  - 백그라운드에서 도커 컨테이너를 실행시키는 속성입니다.
 
-**`-p 9001:80`:**
+- **`-p 9001:80`:**
 
-- 외부포트 9001로 접속하면, 컨테이너의 80번 포트로 연결하는 속성입니다.
-- uvicorn은 컨테이너에서 80번 포트로 실행되고 있기 때문에 필요합니다.
+  - 외부포트 9001로 접속하면, 컨테이너의 80번 포트로 연결하는 속성입니다.
+  - uvicorn은 컨테이너에서 80번 포트로 실행되고 있기 때문에 필요합니다.
 
-**`--restart=always`:**
+- **`--restart=always`:**
 
-- Ubuntu server가 재시작되면, 자동으로 이 컨테이너를 다시 실행하는 속성입니다.
+  - Ubuntu server가 재시작되면, 자동으로 이 컨테이너를 다시 실행하는 속성입니다.
 
-**`-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul`:**
+- **`-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul`:**
 
-- 컨테이너의 시간대가 서울 시간대와 맞지 않는 문제가 발생해서 추가한 속성입니다.
-- 각 국가의 시간대를 저장하고 있는 `/etc/localtime` 파일을 `ro`라는 태그로 마운트하고
-- `TZ=Asia/Seoul` 이라는 환경변수를 `-e`를 사용해 추가해주면, 서울로 시간대를 설정 가능합니다.
+  - 컨테이너의 시간대가 서울 시간대와 맞지 않는 문제가 발생해서 추가한 속성입니다.
+  - 각 국가의 시간대를 저장하고 있는 `/etc/localtime` 파일을 `ro`라는 태그로 마운트하고
+  - `TZ=Asia/Seoul` 이라는 환경변수를 `-e`를 사용해 추가해주면, 서울로 시간대를 설정 가능합니다.
+
+Ubuntu server에서 도커 컨테이너는 실행 중이지만 방화벽 때문에 접속이 되지 않습니다.
+
+따라서 아래 명령어로 **FE:**`9000`, **BE:**`9001` 포트를 개방했습니다.
+
+```shell
+sudo iptables -A INPUT -p tcp --dport 9000 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 9001 -j ACCEPT
+```
+
+참고로 개인 Ubuntu server의 보안을 위해 fail2ban을 적용해 브루트포스 공격을 방지했고, pem 키로만 ssh 접속이 가능하도록 설정을 수정해 해킹을 최대한 방지했습니다.
+
+만약 pem 키로만 ssh 접속이 가능하도록 수정했음에도 비밀번호 로그인이 여전히 가능하다면, 아래 파일을 확인해보시기 바랍니다.
+
+```shell
+sudo vim /etc/ssh/sshd_config.d/50-cloud-init.conf
+```
+
+만약 이 파일에 `PasswordAuthentication yes`가 존재한다면, `/etc/ssh/sshd_config`에서 no로 바꿨어도 yes로 덮어씌워집니다. 따라서 두 파일의 `PasswordAuthentication` 모두 no로 바꿔야 비밀번호 로그인이 차단됩니다.
 
 ---
