@@ -39,6 +39,23 @@ Frontend: https://chsdev.mooo.com
 
 Backend: https://chsdev.mooo.com/api
 
+## https 적용
+
+- Frontend:
+  - https://velog.io/@chiyongs/Nginx-Nginx와-CertBot으로-간단하게-Https-환경-구축하기
+  - https://velog.io/@chch1213/build-home-server-7
+- Backend: NginX의 `/etc/nginx/sites-available` 내 설정파일에 아래와 같은 `location`을 추가해 프록시를 통해서 적용. 기존 도메인 뒤에 /api를 붙이면, 백엔드의 엔드포인트로 이동하도록 해줌. 이 `location` 블록은 `ssl_certificate`된 `server` 블록 내에 위치하므로 https 접속이 가능
+
+  ```
+  location /api/ {
+                  rewrite ^/api(.*) $1 break;
+                  proxy_pass http://127.0.0.1:9001;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+          }
+  ```
+
 ---
 
 ## 참고한 게시물
