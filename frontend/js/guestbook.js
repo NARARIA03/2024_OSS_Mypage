@@ -1,4 +1,4 @@
-const API_URL = "http://chsdev.mooo.com:9001";
+const API_URL = "https://chsdev.mooo.com/api";
 
 /**
  * @description 방명록 컴포넌트가 위치해야 할 부모 컨테이너 선택
