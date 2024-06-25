@@ -35,9 +35,9 @@
 > AWS Learner lab 환경 배포 -> 개인 Ubuntu server로 배포  
 > Frontend는 NginX로 배포했고, Backend는 도커로 배포했음
 
-Frontend: http://211.215.13.73:9000
+Frontend: https://chsdev.mooo.com
 
-Backend: http://211.215.13.73:9001
+Backend: https://chsdev.mooo.com/api
 
 ---
 
