@@ -7,8 +7,7 @@ app = FastAPI()
 
 origins = [
     "http://127.0.0.1:5500",
-    "http://44.220.221.72:9000",
-    "http://chsdev.mooo.com/",
+    "http://chsdev.mooo.com",
 ]
 
 
