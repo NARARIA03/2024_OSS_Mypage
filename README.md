@@ -33,28 +33,12 @@
 ~~Backend: http://44.220.221.72:9001~~
 
 > AWS Learner lab 환경 배포 -> 개인 Ubuntu server로 배포  
-> Frontend는 NginX로 배포했고, Backend는 도커로 배포했음
+> Frontend는 `NginX`로 배포  
+> Backend는 `Docker`로 배포한 뒤 `NginX`의 리버스 프록시를 사용해 https를 적용함
 
 Frontend: https://chsdev.mooo.com
 
 Backend: https://chsdev.mooo.com/api
-
-## https 적용
-
-- Frontend:
-  - https://velog.io/@chiyongs/Nginx-Nginx와-CertBot으로-간단하게-Https-환경-구축하기
-  - https://velog.io/@chch1213/build-home-server-7
-- Backend: NginX의 `/etc/nginx/sites-available` 내 설정파일에 아래와 같은 `location`을 추가해 프록시를 통해서 적용. 기존 도메인 뒤에 /api를 붙이면, 백엔드의 엔드포인트로 이동하도록 해줌. 이 `location` 블록은 `ssl_certificate`된 `server` 블록 내에 위치하므로 https 접속이 가능
-
-  ```
-  location /api/ {
-                  rewrite ^/api(.*) $1 break;
-                  proxy_pass http://127.0.0.1:9001;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_set_header X-Forwarded-Proto $scheme;
-          }
-  ```
 
 ---
 
@@ -309,7 +293,13 @@ sudo docker images
 
 ---
 
-## BackEnd 배포 (개인 Ubuntu server, Docker)
+<br/>
+
+## 여기까지가 오픈소스소프트웨어 수업 범위였고, 아래부터는 개인적으로 공부한 내용입니다.
+
+<br/>
+
+## 1. BackEnd 배포 (개인 Ubuntu server, Docker)
 
 백엔드 배포 이전에 FE의 방명록 시간 관련 로직을 수정해야 합니다.
 개인 Ubuntu server는 더이상 버지니아 주에 위치하지 않기 때문에 시간 관련 코드를 아래와 같이 수정합니다.
@@ -408,14 +398,289 @@ sudo iptables -A INPUT -p tcp --dport 9000 -j ACCEPT
 sudo iptables -A INPUT -p tcp --dport 9001 -j ACCEPT
 ```
 
-참고로 개인 Ubuntu server의 보안을 위해 fail2ban을 적용해 브루트포스 공격을 방지했고, pem 키로만 ssh 접속이 가능하도록 설정을 수정해 해킹을 최대한 방지했습니다.
+---
 
-만약 pem 키로만 ssh 접속이 가능하도록 수정했음에도 비밀번호 로그인이 여전히 가능하다면, 아래 파일을 확인해보시기 바랍니다.
+## 2. 개인 Ubuntu server에 도메인을 등록하고 https 적용
+
+### 도메인 만들기
+
+https://freedns.afraid.org/zc.php?from=L2R5bmFtaWMv
+
+위 사이트에서 무료 도메인을 만들 수 있습니다. 회원가입을 진행하고 이메일 인증을 마친 뒤 좌측의 Subdomains를 클릭합니다.
+
+그 다음 새 서브 도메인을 생성합니다. `Type`은 A로 두고, `Subdomain`은 chsdev로 설정, `Domain`은 mooo.com을 사용했고, `Destination`은 Ubuntu server의 외부 IP 주소로 설정한 뒤 나머지는 건들지 않고 생성합니다. -> `chsdev.mooo.com` 이라는 새로운 도메인이 생성되었습니다.
+
+이제 브라우저 주소창에 `http://서버_외부_IP_주소:포트번호` 를 입력하는 대신 `http://chsdev.mooo.com:포트번호`를 입력해서 접속할 수 있게 되었습니다.
+
+---
+
+### 포트 번호 대신 도메인을 기반으로 프로젝트를 구분하도록 설정
+
+여기서 좀 더 나아가 현재 배포하고 있는 모든 프로젝트를 각각의 도메인 주소를 사용해 80번 포트로 배포하기 위한 작업을 `NginX`로 수행합니다.
+
+위에서 `chsdev.mooo.com` 도메인을 만든것과 동일하게 `genshin.gg.mooo.com` 도메인과 `imagetale.mooo.com` 도메인 등, 배포 중인 다른 프론트엔드를 위한 도메인을 생성합니다.
+
+그리고 Ubuntu server에서 `/etc/nginx/sites-available/default`, `/etc/nginx/sites-enabled/default` 두 파일을 초기 상태로 돌렸습니다. (각 프로젝트마다 하나의 파일로 관리하기 위해)
+
+(참고로 `sites-available` 디렉토리 내에 각각 프로젝트 배포를 위한 설정 파일을 작성하고, 실제 배포를 진행할 프로젝트의 설정 파일만 `sites-enabled` 디렉토리에 심볼릭 링크를 거는 형식으로 사용하는게 일반적이라고 하는 것 같습니다.)
+
+다음으로 아래 명령어를 사용해 `sites-available` 디렉토리 내에 `com.mooo.chsdev.conf` 라는 NginX 설정 파일을 만들고 아래와 같이 작성합니다.
 
 ```shell
-sudo vim /etc/ssh/sshd_config.d/50-cloud-init.conf
+sudo vim /etc/nginx/sites-available/com.mooo.chsdev.conf
 ```
 
-만약 이 파일에 `PasswordAuthentication yes`가 존재한다면, `/etc/ssh/sshd_config`에서 no로 바꿨어도 yes로 덮어씌워집니다. 따라서 두 파일의 `PasswordAuthentication` 모두 no로 바꿔야 비밀번호 로그인이 차단됩니다.
+```conf
+# 추가할 서버 블록의 예시
+server {
+        listen 80;
+        listen [::]:80;
+
+        server_name chsdev.mooo.com;
+        root /var/www/mypage/frontend;
+        index index.html;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}
+```
+
+다른 프로젝트들도 위와 동일하게 각각의 conf 파일을 만들어 관리해줬습니다.
+
+핵심은 server 블록 내의 **server_name에 각각의 도메인을 넣는다**는 점입니다.
+이를 통해 NginX가 같은 IP의 80번 포트로 들어온 요청이더라도, 어떤 도메인에서 온 요청인지를 확인해 각각 다른 작업을 수행할 수 있습니다.
+
+마지막으로 sites-enabled 디렉토리로 심볼릭 링크를 걸기 위해 아래 명령어를 사용하고 NginX를 재시작합니다.
+
+```shell
+cd /etc/nginx/sites-enabled
+sudo ln -s ../sites-available/com.mooo.chsdev.conf
+sudo nginx -s reload
+```
+
+위 과정이 성공적이었다면, 이제 브라우저에 `http://외부_IP` 을 입력하면, NginX 기본 웹페이지가 나올 것이고, `http://chsdev.mooo.com` 을 입력하면, 이 레포지토리의 FE 웹페이지가 나올 것입니다.
+
+만약 위 과정을 다른 프로젝트에도 적용한 경우, 해당하는 도메인을 브라우저에 입력하면 그 프로젝트의 FE 웹페이지가 나올 것입니다.
+
+> 여기서 멈추면, **CORS** 정책 관련한 문제가 발생할 수 있습니다. 이는 BE에서 allow_origins에 새로운 FE의 주소(`http://chsdev.mooo.com` 등...)를 명시해주면 해결됩니다.
+
+---
+
+### 인증서를 등록해서 https 적용
+
+Ubuntu server에서 `Certbot`을 사용해 간단하게 인증서 발급 및 NginX 설정 파일 수정이 가능합니다.
+
+아래 명령어를 순차적으로 수행해 적용 가능합니다.
+
+```shell
+sudo apt update
+
+sudo apt-get install python3-certbot-nginx
+
+sudo certbot --nginx -d chsdev.mooo.com
+```
+
+> 참고로 `-d` 속성은 여러번 사용 가능합니다.  
+> 즉 `-d chsdev.mooo.com -d genshin.gg.mooo.com -d imagetale.mooo.com` 과 같은 형태로 사용 가능합니다.
+
+이후 시키는대로 절차를 따르고 약관에 동의하면, 인증서 발급과 NginX 설정파일에 적용까지 직접 해줍니다.
+
+한번 아래 명령어로 NginX 설정 파일을 열어보면 확인 가능합니다.
+
+```shell
+sudo vim /etc/nginx/sites-enabled/com.mooo.chsdev.conf
+```
+
+```
+server {
+	server_name chsdev.mooo.com;
+	root /var/www/mypage/frontend;
+	index index.html;
+
+	location / {
+	  try_files $uri $uri/ =404;
+	}
+
+	listen [::]:443 ssl ipv6only=on; # managed by Certbot
+	listen 443 ssl; # managed by Certbot
+	ssl_certificate ...; # managed by Certbot
+	ssl_certificate_key ...; # managed by Certbot
+	include ...; # managed by Certbot
+	ssl_dhparam ...; # managed by Certbot
+}
+
+server {
+  if ($host = chsdev.mooo.com) {
+	  return 301 https://$host$request_uri;
+  } # managed by Certbot
+
+
+  listen 80;
+  listen [::]:80;
+
+  server_name chsdev.mooo.com;
+  return 404; # managed by Certbot
+}
+```
+
+설정 파일을 읽어보면 알 수 있듯, 80번 포트로 접속했고 host가 도메인과 동일하다면 301 리다이렉션을 수행해 https로 연결되도록 설정 파일이 자동으로 작성되어 있습니다.
+
+또한 `Certbot`을 사용하면, 인증서가 만료되기 전에 자동으로 재발급하는 cron까지 자동으로 설정해줍니다.
+
+아래 명령어로 NginX를 재시작한 뒤, `http://chsdev.mooo.com`, `https://chsdev.mooo.com` 두 주소에 접속해보면, 모두 https 연결로 접속되는 것을 확인할 수 있습니다.
+
+```shell
+sudo nginx -s reload
+```
+
+(참고로 당연히 네트워크에서 443 포트포워딩 및 Ubuntu server의 방화벽에서 443포트를 허용해야만 접속이 가능합니다.)
+
+그러나, BE와 데이터를 교환하는 과정에서 `CORS` 문제, `Mixed Content` 문제가 발생할 것입니다.
+
+---
+
+### CORS 문제, Mixed Content 문제
+
+먼저 두 문제의 발생 원인부터 정리해보면
+
+- **CORS 문제의 발생 원인:**
+
+  - index.html을 가져온 출처와, 요청에 대한 응답을 보낸 출처가 다른 경우 발생
+  - 주로 API를 배포하는 **BE 쪽에서 FE의 출처를 allow_origins에 작성해두지 않아서 발생**
+  - 해결 방법: 요청에 대한 응답을 보낸 출처 쪽에서 요청을 보낸 출처를 allow_origins에 작성해두면 됩니다.
+
+- **Mixed Content 문제의 발생 원인:**
+
+  - HTTPS로 보안이 보장된 웹사이트에서 HTTP와 같은 보안이 보장되지 않은 웹사이트로 요청을 보내는 경우
+  - 즉, **HTTPS에서 HTTP에게 요청을 보내는 경우** 발생
+  - 해결 방법: HTTP를 HTTPS로 바꿔주면 됩니다.
+
+기존에 발생하지 않던 두 문제가 발생하는 이유는 크게 두 가지입니다.
+
+1. 외부 IP 대신 **도메인**을 사용하도록 변경
+2. FE 배포를 http에서 **https**로 변경
+
+---
+
+### CORS 해결
+
+먼저 **CORS**를 해결하려면, BE의 `main.py`의 `CORSMiddleware` 부분을 아래와 같이 수정해서 **도메인을 적용한 출처를 명시**해줘야 합니다.
+
+```python
+...
+
+origins = [
+    "http://127.0.0.1:5500",
+    "http://chsdev.mooo.com", # 추가!
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+...
+```
+
+그리고 새로 `Docker image`를 빌드하고 `Container`로 실행하면, `CORS` 문제는 해결되지만 `Mixed Content` 문제가 발생할 것입니다.
+
+(만약 계속 CORS가 발생한다면, 개발자 도구의 네트워크 탭의 캐시 사용 중지를 체크하고 페이지를 처음부터 다시 탐색해본 뒤, 캐시 사용 중지를 꺼서 해결할 수 있습니다.)
+
+---
+
+### Mixed Content 해결
+
+여러 방법들이 있지만, 가장 간단한 것은 `NginX`를 사용해서 `Certbot`을 통해 생성된 인증서를 활용해 서버 내부의 `Docker container`로 `proxy_pass` 시키는 것 입니다.
+
+이를 Reverse proxy 라고 합니다.
+
+먼저 위에서 `Docker container`를 실행할 때 9001번 포트를 사용했다고 가정하면 `(-p 9001:80)`
+
+NginX 설정 파일 `com.mooo.chsdev.conf`를 아래와 같이 수정해서 BE 주소를 `https://chsdev.mooo.com/api`로 사용할 수 있습니다.
+
+```conf
+server {
+	server_name chsdev.mooo.com;
+	root /var/www/mypage/frontend;
+	index index.html;
+
+	location / {
+	  try_files $uri $uri/ =404;
+	}
+
+	## 추가되는 부분, https로 받은 요청을 http 백엔드로 프록시 수행 ##
+	location /api/ {
+	  rewrite ^/api(.*) $1 break; # proxy_pass로 보낼 때 /api 부분을 없애줌
+	  proxy_pass http://127.0.0.1:9001; # 포트는 백엔드 배포한 포트로
+	  proxy_set_header X-Real-IP $remote_addr;
+	  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	  proxy_set_header X-Forwarded-Proto $scheme;
+	}
+	## 여기까지 추가해주면 된다 ##
+
+	listen [::]:443 ssl ipv6only=on; # managed by Certbot
+	listen 443 ssl; # managed by Certbot
+	ssl_certificate ...; # managed by Certbot
+	ssl_certificate_key ...; # managed by Certbot
+	include ...; # managed by Certbot
+	ssl_dhparam ...; # managed by Certbot
+}
+
+server {
+	if ($host = chsdev.mooo.com) {
+	  return 301 https://$host$request_uri;
+  } # managed by Certbot
+
+
+  listen 80;
+  listen [::]:80;
+
+  server_name chsdev.mooo.com;
+  return 404; # managed by Certbot
+}
+```
+
+설정파일에서 추가된 부분만 뜯어서 살펴봅시다.
+
+```conf
+location /api/ {
+  rewrite ^/api(.*) $1 break; # proxy_pass로 보낼 때 /api 부분을 없애줌
+  proxy_pass http://127.0.0.1:9001; # 포트는 백엔드 배포한 포트로
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+- `location / {}` 블록은 이미 FE를 배포하는데 사용되는 중이므로, `location /api/ {}` 블록을 만들어서 이 주소를 `Docker container`와 연결했습니다.
+
+- `rewrite ^/api(.*) $1 break;` 은 주석에도 적혀있지만, 실제 FastAPI가 기대하는 엔드포인트에는 `/api`가 포함되면 안 됩니다. 따라서 이를 없애고, 뒷부분만을 사용하기 위한 설정입니다.
+
+- `proxy_pass http://127.0.0.1:9001;` 을 통해 `https://chsdev.mooo.com/api`로 들어오는 요청을 `http://127.0.0.1:9001`로 전달합니다. 127.0.0.1은 루프백 IP이므로, `Ubuntu server` 내의 `NginX`가 전달한 요청은 `Ubuntu server` 내의 `Docker container`가 받아서 처리하게 됩니다.
+
+  - https에서 인증서의 역할은 인터넷을 돌아다니는 데이터를 암호화하기 위한 목적이므로, `NginX`가 `Docker container`로 보내는 주소가 http인 것은 괜찮습니다.
+
+  - 왜냐하면 어차피 `Docker container`가 반환한 값을 `NginX`가 받아서 인증서를 사용해 데이터를 암호화해서 인터넷 상으로 전송하기 때문입니다.
+
+  - 즉 이전에는 `Uvicorn`이 데이터를 암호화하지 않고 바로 전송하는 구조였다면, 지금은 `Uvicorn` 앞에 `NginX`를 배치해서 `NginX`가 인터넷과 내부망 사이 문 역할을 **https**로 수행하는 것입니다.
+
+최종적으로 예시를 들어보면, FE에서 `https://chsdev.mooo.com/api/some/path` 로 요청을 보내면, `NginX`가 수신한 뒤, `http://127.0.0.1:9001/some/path` 로 요청을 보내게 되고, 이를 `Docker container`가 받아서 요청을 처리하고, 결과를 `NginX`가 받아서 FE로 보내주는 구조로 설명이 됩니다.
+
+이렇게 Reverse proxy를 적용하고 NginX를 재시작 한 뒤, `https://chsdev.mooo.com/api/some/path`와 같은 BE 주소에 접속해보면 데이터를 잘 받아오는 것을 알 수 있습니다.
+
+그러면 마지막으로 FE에서 요청을 보낼 BE 주소만 수정해주면 Mixed Content 문제가 해결됩니다.
+
+```js
+// guestbook.js
+const API_URL = "https://chsdev.mooo.com/api";
+
+...
+```
+
+여기까지가 도메인을 적용하고, https로 암호화된 웹페이지를 완성하는 과정이었습니다.
 
 ---
