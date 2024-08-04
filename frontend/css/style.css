@@ -326,44 +326,65 @@ body section .item-container > div {
 }
 
 .grid-container > div:nth-of-type(4):hover {
-  background-color: #1c202c;
+  background-color: #3784c2;
 }
 .grid-container > div:nth-of-type(4):hover p {
   color: var(--primary-text);
 }
 
 .grid-container > div:nth-of-type(5):hover {
-  background-color: #2c8e89;
+  background-color: #1c202c;
 }
 .grid-container > div:nth-of-type(5):hover p {
   color: var(--primary-text);
 }
 
 .grid-container > div:nth-of-type(6):hover {
-  background-color: #b956a6;
+  background-color: #2c8e89;
 }
 .grid-container > div:nth-of-type(6):hover p {
   color: var(--primary-text);
 }
 
 .grid-container > div:nth-of-type(7):hover {
-  background-color: #0f161e;
+  background-color: #b956a6;
 }
 .grid-container > div:nth-of-type(7):hover p {
   color: var(--primary-text);
 }
 
 .grid-container > div:nth-of-type(8):hover {
-  background-color: #026259;
+  background-color: #0f161e;
 }
 .grid-container > div:nth-of-type(8):hover p {
   color: var(--primary-text);
 }
 
 .grid-container > div:nth-of-type(9):hover {
-  background-color: #0f161e;
+  background-color: #026259;
 }
 .grid-container > div:nth-of-type(9):hover p {
+  color: var(--primary-text);
+}
+
+.grid-container > div:nth-of-type(10):hover {
+  background-color: #0f161e;
+}
+.grid-container > div:nth-of-type(10):hover p {
+  color: var(--primary-text);
+}
+
+.grid-container > div:nth-of-type(11):hover {
+  background-color: #269d2a;
+}
+.grid-container > div:nth-of-type(11):hover p {
+  color: var(--primary-text);
+}
+
+.grid-container > div:nth-of-type(12):hover {
+  background-color: #2f79b6;
+}
+.grid-container > div:nth-of-type(12):hover p {
   color: var(--primary-text);
 }
 
